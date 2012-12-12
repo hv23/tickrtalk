@@ -1,0 +1,7 @@
+<div id="team-<%= @team.id %>" class="add_team">
+	<div style="float:right;">
+		<%= link_to "(remove)", {:action => "removeteam", :controller => "myteams", :id => @team.id}, :class => "get", :style => "font-size:0.9em;color:#555555;border:0;" %>
+	</div>
+
+	<%= h @team.team_name %> | <%= h @team.league.upcase %>
+</div>

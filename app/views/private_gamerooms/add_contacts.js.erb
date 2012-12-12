@@ -1,0 +1,11 @@
+var invitees = $('#invitees').val();
+
+if (invitees == "") {
+	$("#invitees").val($("#invitees").val() + "<%= @contact_input %>");
+	$("#contact").val("");
+} else {
+	$("#invitees").val($("#invitees").val() + ", <%= @contact_input %>");
+	$("#contact").val("");
+}
+
+$(".ac_results").remove();

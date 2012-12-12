@@ -1,0 +1,5 @@
+<ul id="ticker">
+	<% @updates.each do |u| %>
+		<li><span class="ar"><strong><% if u.source == 1 %><%= h u.twitter_username %><% else %><%= h u.user.username %><% end %></strong> <span style="color:#CCCCCC;"><%= h u.content %></span></span> <a href="/gameroom/<%= u.game.id %>" class="grl"><%= u.game.name %></a></li> 
+	<% end %>
+</ul>

@@ -1,0 +1,21 @@
+# Logfile created on Sat Jun 26 12:46:16 -0500 2010 by logger.rb/22285
+2010-06-26T12:46:16-0500: RPM Monitoring DJ worker host:Johnny-Nguyens-MacBook-Pro.local pid:6471
+2010-06-26T12:46:17-0500: *** Starting job worker delayed_job host:Johnny-Nguyens-MacBook-Pro.local pid:6471
+2010-06-26T12:46:17-0500: * [Worker(delayed_job host:Johnny-Nguyens-MacBook-Pro.local pid:6471)] acquired lock on UpdateOpenfooty
+2010-06-26T12:46:18-0500: * [JOB] delayed_job host:Johnny-Nguyens-MacBook-Pro.local pid:6471 completed after 0.5854
+2010-06-26T12:46:18-0500: * [Worker(delayed_job host:Johnny-Nguyens-MacBook-Pro.local pid:6471)] acquired lock on UpdateSlowGame
+2010-06-26T12:46:21-0500: * [JOB] delayed_job host:Johnny-Nguyens-MacBook-Pro.local pid:6471 completed after 3.3489
+2010-06-26T12:46:21-0500: 2 jobs processed at 0.5011 j/s, 0 failed ...
+2010-06-26T12:54:56-0500: * [Worker(delayed_job host:Johnny-Nguyens-MacBook-Pro.local pid:6471)] acquired lock on UpdateSlowGameHourly
+2010-06-26T12:54:56-0500: * [JOB] delayed_job host:Johnny-Nguyens-MacBook-Pro.local pid:6471 completed after 0.0076
+2010-06-26T12:54:56-0500: 1 jobs processed at 64.3999 j/s, 0 failed ...
+2010-06-26T12:56:21-0500: * [Worker(delayed_job host:Johnny-Nguyens-MacBook-Pro.local pid:6471)] acquired lock on UpdateOpenfooty
+2010-06-26T12:56:21-0500: * [JOB] delayed_job host:Johnny-Nguyens-MacBook-Pro.local pid:6471 completed after 0.0067
+2010-06-26T12:56:21-0500: 1 jobs processed at 74.0467 j/s, 0 failed ...
+2010-06-26T13:04:22-0500: * [Worker(delayed_job host:Johnny-Nguyens-MacBook-Pro.local pid:6471)] acquired lock on UpdateSlowGame
+2010-06-26T13:04:22-0500: * [JOB] delayed_job host:Johnny-Nguyens-MacBook-Pro.local pid:6471 completed after 0.0090
+2010-06-26T13:04:22-0500: 1 jobs processed at 67.7791 j/s, 0 failed ...
+2010-06-26T13:06:22-0500: * [Worker(delayed_job host:Johnny-Nguyens-MacBook-Pro.local pid:6471)] acquired lock on UpdateOpenfooty
+2010-06-26T13:06:22-0500: * [JOB] delayed_job host:Johnny-Nguyens-MacBook-Pro.local pid:6471 completed after 0.0055
+2010-06-26T13:06:22-0500: 1 jobs processed at 97.7625 j/s, 0 failed ...
+2010-06-26T13:09:57-0500: Exiting...

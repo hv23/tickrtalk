@@ -1,0 +1,62 @@
+<% javascript_tag do -%>
+	$(function() {
+		$('a.update_content_reply_to').click(function() {
+		  window.scrollTo(0, 0);
+		  var pieces = $(this).attr('rel').split(':');
+		  var screen_name = pieces[0];
+		  var id = pieces[1];
+		  $('#update_content').focus().val('@' + screen_name + ' ');
+		  $('#update_in_reply_to_update_id').val(id);
+		  $('#update_in_reply_to_user').val(screen_name);
+		  return false;
+		});
+	});
+	
+	$(document).ready(function() {
+		$('a[rel*=facebox]').facebox();
+		 $.facebox.settings.opacity = 0.5;
+	});
+<% end -%>
+
+	<div class="updateitem">
+  	<table id="update_content_table">
+  		<tr>
+  			<td width="40"><div style="width:48px;height:48px;">
+  				<% if (update.source == 0) %>
+  					<% user = User.find(update.user_id) %>
+  					<% if update.user_id != 0 %>
+  						<% if update.user.avatar_file_name.blank? %>
+  						<img src="/images/noavatar48.gif" />
+  						<% else %>
+  						<%= image_tag update.user.avatar.url(:thumb) %>
+  						<% end %>
+  					<% end %>
+  				<% elsif (update.source == 1) %>
+  					<img src="<%= update.image_url %>" alt="" />
+  				<% end %>
+  			</div></td>
+  			<td style="padding-left:5px;font-size:1.1em;">
+  				<% if (update.source == 0) %>
+  				<div><strong><a href="/users/<%= h user.username %>" target="_blank" style="color:#000000;text-decoration:none;"><%= h user.username %></a></strong> <%= linkup_mentions(auto_link(h(update.content))) %></div><div></div>
+  				<% elsif (update.source == 1) %>
+  				<div><strong><%= h update.twitter_username %></strong> <%= linkup_twitter_mentions(auto_link(h(update.content))) %> <span style="font-size:0.8em;"><a href="<%= update.linkto %>" style="color:#666666;border:none;">via Twitter</a></span></div>
+  				<% end %>
+  				<div style="font-size:0.8em;color:#555555;">
+					<% if update.source == 0 %><a href="/update/<%= update.id %>?facebox=true" rel="facebox" style="color:#555555;text-decoration:none;"><% end %><span id="update-<%= update.id %>" class="timeago" title="<%= update.date_created.iso8601 %>"><%= time_ago_in_words(update.date_created) %> ago</span><% if update.source == 0 %></a><% end %>
+	
+					<% if update.source == 0 %>	
+						<% if update.in_reply_to_update_id && update.in_reply_to_user %>
+							<%= link_to "in reply to #{h update.in_reply_to_user}", "/update/#{h update.in_reply_to_update_id}?facebox=true", :rel => "facebox", :class => "in_reply_to" %>
+						<% end %>
+					
+						<%= link_to "Reply", "#", :class => "update_content_reply_to update_reply_to", :rel => h("#{update.user.username}:#{update.id}"), :title => "Reply to #{h update.user.username}", :id => "in_reply_to_#{update.id}" %>
+					<% end %>
+				</div>
+  				<script type="text/javascript">
+  				jQuery.timeago(jQuery("#update-<%= update.id %>"));
+  				</script>
+  			</td>
+  		</tr>
+  	</table>
+
+	</div>

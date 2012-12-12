@@ -1,0 +1,5 @@
+<% unless @values.empty? %>
+	<% @values.each do |team| %>
+		<%= team.title %> - <%= team.league.upcase %>|<%= team.id %>
+	<% end %>
+<% end %>

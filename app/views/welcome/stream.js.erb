@@ -1,0 +1,2 @@
+$('#liveviewpane').html("<%= escape_javascript(render(:partial => 'stream', :locals => {:update => @update})) %>");  
+$("#liveviewpane").fadeIn('slow');

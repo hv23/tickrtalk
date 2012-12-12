@@ -1,0 +1,39 @@
+<div class="constraint" style="padding-left:25px;padding-top:20px;">
+	<!--<div class="pagetitle">My Teams</div>-->
+	<h1>My Teams</h1>
+	<table style="font-size:1.0em; width:100%; border:0;">
+		<tr>
+			<td style="vertical-align:top; valign:top; width:70%;">
+				<div class="subtitle">
+					Upcoming Games
+				</div>
+				
+				<% if @games.nil? || @games.empty? %> 
+					No upcoming games.
+				<% else %>
+					<%= render :partial => "games/gamelist", :collection => @games[0..30] %>
+				<% end %>
+				
+			</td>
+			<td width="30%" valign="top" style="vertical-align:top;">
+				<div class="subtitle">
+					Teams I'm a Fan Of
+				</div>
+				
+				<% if @fanof.empty? %>
+					You aren't a fan of any teams!
+				<% else %>
+					<% @fanof.each do |fan| %>
+						<div style="padding:2px;">
+							<a href="/teams/<%= fan.team.id %>" style="color:#333333;"><%= fan.team.team_name %> (<%= fan.team.league.upcase %>)</a>
+						</div>
+					<% end %>
+				<% end %>
+				
+				<div class="subtitle">
+					<%= link_to "Edit My Teams", :action => "edit", :controller => "myteams", :id => current_user.id %>
+				</div>
+			</td>
+		</tr>
+	</table>
+</div>

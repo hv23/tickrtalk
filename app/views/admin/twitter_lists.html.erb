@@ -1,0 +1,44 @@
+<div class="constraint">
+
+  <h2>TickrTalk Administration</h2>
+  <p style="font-size:1.2em;">
+    <%= link_to "Main", admin_path %> | <%= link_to "Twitter Lists", admin_twitter_lists_path %>
+  </p>
+  
+  <div class="dotted_under">
+    <h3>Add a Twitter User</h3>
+    <% form_tag 'add_twitter_list' do %>
+      <label>Twitter Username:</label><%= text_field_tag 'user', nil, :style => "margin-left:10px;" %><br />
+      <label>Sport:</label><%= select_tag 'sport', "<option>all</option><option>nba</option><option>nfl</option><option>nhl</option><option>ncaaf</option><option>ncaab</option><option>soccer</option><option>baseball</option>", :style => "margin-left:10px;" %><br />
+      
+      <%= submit_tag "Submit" %>
+    <% end %>
+  </div>
+  
+  <div class="dotted_under">
+
+    <h3 style="margin-bottom:0;">Twitter Lists</h3>
+    <p style="margin:10px 0px 10px 0px;"><%= link_to "All", admin_twitter_lists_path(:sport => "all") %> | <%= link_to "NBA", admin_twitter_lists_path(:sport => "nba") %> | <%= link_to "NFL", admin_twitter_lists_path(:sport => "nfl") %> | <%= link_to "NHL", admin_twitter_lists_path(:sport => "nhl") %> | <%= link_to "NCAAF", admin_twitter_lists_path(:sport => "ncaaf") %> | <%= link_to "NCAAB", admin_twitter_lists_path(:sport => "ncaab") %> | <%= link_to "Soccer", admin_twitter_lists_path(:sport => "soccer") %> | | <%= link_to "Baseball", admin_twitter_lists_path(:sport => "baseball") %></p>
+    
+
+    <table class="admin">
+      <tr>
+        <th class="admin">#</th>
+        <th class="admin">User</th>
+        <th class="admin">Sport/League</th>
+      </tr>
+  
+      <% @lists.each_with_index do |list, i| %>
+        <tr>
+          <td class="admin"><%= i+1 %></td>
+          <td class="admin"><%=h list.user %></td>
+          <td class="admin"><%=h list.sport %></td>
+        </tr>
+      <% end %>
+    </table>
+  
+    <%= will_paginate @lists %>
+
+  </div>
+
+</div>

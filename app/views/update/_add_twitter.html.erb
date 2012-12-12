@@ -1,0 +1,1 @@
+$('#public_timeline').prepend($("<%= escape_javascript(render(:partial => 'update/twitter_update', :game_id => @game_id, :game_name => @game_name, :user => @user, :content => @content, :linkto => @linkto, :date_created => @date_created)) %>").fadeIn('slow'));

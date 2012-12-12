@@ -1,0 +1,11 @@
+<% unless @fill_contacts.empty? %>
+
+<div class="ac_results">
+<ul>
+	<% @fill_contacts.each do |contact| %>
+		<li><a href="#" onclick="$('#contact').val('<%= contact[0] %> - <%= contact[1] %>');"><%= contact[0] %> - <%= contact[1] %></a></li>
+	<% end %>
+	
+</ul>
+</div>
+<% end %>

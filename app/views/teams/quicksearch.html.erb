@@ -1,0 +1,6 @@
+<% @teams.each do |team| %>
+	<div style="margin-bottom:3px;">
+		<strong><a href="/teams/<%= team.id %>"><%= h team.team_name %></a></strong> 
+		<span style="color:#777777;"><%= team.league.upcase %></span>
+	</div>
+<% end %>

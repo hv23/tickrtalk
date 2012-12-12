@@ -1,0 +1,182 @@
+// Place your application-specific JavaScript functions and classes here
+// This file is automatically included by javascript_include_tag :defaults
+$(document).ajaxSend(function(event, request, settings) {
+  if (typeof(AUTH_TOKEN) == "undefined") return;
+  // settings.data is a serialized string like "foo=bar&baz=boink" (or null)
+  settings.data = settings.data || "";
+  settings.data += (settings.data ? "&" : "") + "authenticity_token=" + encodeURIComponent(AUTH_TOKEN);
+});
+
+var chatscroll = new Object();
+
+chatscroll.Pane = function(scrollContainerId){
+  this.bottomThreshold = 20;
+  this.scrollContainerId = scrollContainerId;
+  this._lastScrollPosition = 100000000;
+}
+
+chatscroll.Pane.prototype.activeScroll = function(){
+
+  var _ref = this;
+  var scrollDiv = document.getElementById(this.scrollContainerId);
+  var currentHeight = 0;
+  
+  var _getElementHeight = function(){
+    var intHt = 0;
+    if(scrollDiv.style.pixelHeight)intHt = scrollDiv.style.pixelHeight;
+    else intHt = scrollDiv.offsetHeight;
+    return parseInt(intHt);
+  }
+
+  var _hasUserScrolled = function(){
+    if(_ref._lastScrollPosition == scrollDiv.scrollTop || _ref._lastScrollPosition == null){
+      return false;
+    }
+    return true;
+  }
+
+  var _scrollIfInZone = function(){
+    if( !_hasUserScrolled || 
+        (currentHeight - scrollDiv.scrollTop - _getElementHeight() <= _ref.bottomThreshold)){
+        scrollDiv.scrollTop = currentHeight;
+        _ref._isUserActive = false;
+    }
+  }
+
+
+  if (scrollDiv.scrollHeight > 0)currentHeight = scrollDiv.scrollHeight;
+  else if(scrollDiv.offsetHeight > 0)currentHeight = scrollDiv.offsetHeight;
+
+  _scrollIfInZone();
+
+  _ref = null;
+  scrollDiv = null;
+
+}
+
+function getComputedHeight(theElt){
+        var browserName=navigator.appName; 
+         if (browserName=="Microsoft Internet Explorer"){
+                var is_ie=true;
+         } else {
+                var is_ie=false;
+         }
+        if(is_ie){
+                tmphght = document.getElementById(theElt).offsetHeight;
+        }
+        else{
+                docObj = document.getElementById(theElt);
+                var tmphght1 = document.defaultView.getComputedStyle(docObj, "").getPropertyValue("height");
+                tmphght = tmphght1.split('px');
+                tmphght = tmphght[0];
+        }
+        return tmphght;
+}
+
+
+function addTeam() {
+	// get the team id
+	teamid = document.getElementById('teamid').value
+	teamname = document.getElementById('teaminput').value
+	$.ajax({
+		type: "POST",
+		url: "/myteams/addteam/",
+		data: "id=" + teamid,
+		success: function(msg){
+			$('#teamslist').append(msg)
+			document.getElementById('teamid').value = ''
+			document.getElementById('teaminput').value = ''
+		}
+	});
+}
+
+function removeTeam(teamid) {
+	$.ajax({
+		type: "POST",
+		url: "/myteams/removeteam/",
+		data: "id=" + teamid,
+		success: function(msg){
+			$("#team-" + teamid).remove()
+		}
+	});
+}
+
+// following javascripts
+
+// toggle
+function togglefollow(userid) {
+	$.ajax({
+		type: "POST",
+		url: "/users/togglefollow/",
+		data: "id=" + userid,
+		success: function(msg){
+			document.getElementById('follow').innerHTML = msg
+		}
+	});
+}
+
+
+
+function enterPressed(e) {
+	var characterCode
+	if(e && e.which){ // Netscape Navigator 4
+		e = e
+		characterCode = e.which
+	}
+	else {
+		e = event
+		characterCode = e.keyCode // IE specific
+	}
+	if (characterCode == 13) return true   // Enter key is 13
+	else return false
+}
+
+function searchGames() {
+	query =  document.getElementById("upcominggamesearch").value
+	$.ajax({
+		type: "POST",
+		url: "/games/quicksearch/",
+		data: "q=" + query,
+		success: function(msg){
+			document.getElementById('gamesearchresult').innerHTML = msg
+		}
+	});
+}
+
+function searchTeams() {
+	query =  document.getElementById("teamsearch").value
+	$.ajax({
+		type: "POST",
+		url: "/teams/quicksearch/",
+		data: "q=" + query,
+		success: function(msg){
+			document.getElementById('teamsearchresult').innerHTML = msg
+		}
+	});
+}
+
+function liveview() {
+	$.getJSON("/stream/liveview", function(json){
+	  if(json.updatecontent != $("#updatecontent").text()) {
+			$("#liveviewpane").hide()
+			$("#updatecontent").text(json.updatecontent)
+			if (json.source == 1) {
+				$("#updateuserlink").attr('href','#')
+			} else {
+				$("#updateuserlink").attr('href','/users/' + json.updateuserlink)
+			}
+			$("#updateuserlink").text(json.updateuserlink)
+			$("#updategameroomlink").attr('href','/gameroom/' + json.updategameroomlink)
+			$("#updategameroomlink").text(json.updategamename)
+			$("#liveviewpane").fadeIn('slow')
+		}
+	}
+)
+} 
+
+$(document).ready(function (){  
+  $('#update_form').submit(function (){  
+    $.post($(this).attr('action'), $(this).serialize(), null, null);  
+    return false;  
+  });  
+}); 

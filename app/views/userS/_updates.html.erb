@@ -1,0 +1,15 @@
+<% @updates.each do |update| %>
+  <div style="padding:3px;padding-top:5px;padding-bottom:5px;border-bottom:1px solid #EEEEEE;">
+  	<div style="font-size:1.5em;"><%= linkup_mentions(auto_link(h(update.content))) %></div>
+  	<div class="underupdate">in game
+  		<% game = Game.find(update.game_id) %>
+  		<% unless game.nil? %>
+  			<a href="/gameroom/<%= game.id %>"><%= h game.name %></a>
+  		<% end %> &ndash; 
+		
+  		<a href="/update/<%= update.id %>"><%= time_ago_in_words(update.date_created) %> ago <span style="font-size:0.9em;">(permalink)</span></a>
+  	 </div>
+  </div>
+<% end %>
+
+<%= will_paginate(@updates, :more => true) %>

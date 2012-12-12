@@ -1,0 +1,2 @@
+$('#updatespane').append("<%= escape_javascript(render(:partial => 'update_content', :locals => {:update => @update})) %>");  
+$('#update_form')[0].reset();  

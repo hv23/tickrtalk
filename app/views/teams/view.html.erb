@@ -1,0 +1,71 @@
+<div class="constraint teams_content" style="padding-left:20px;">
+
+<% if @team.league == 'soccer' %>  
+  <%= image_tag(@team.badge, :size => "48x48", :style => "vertical-align:middle;float:left;margin-right:10px;") unless @team.badge.nil? %>
+<% end %>
+
+  
+<h1 style="margin-bottom:2px;"><%= @team.team_name %></h1>
+<% unless @team.league.nil? %><%= @team.league.upcase %><% end %>
+
+<table id="team_view_table">
+	<tr>
+		<td width="20%" style="margin:0;padding:0;padding-right:10px;vertical-align:top;">
+			<h3 style="margin-bottom:8px;">Fans</h3>
+			<% if current_user %>
+				<a href="/users/fan/<%= @team.id %>"><% if @fanship.nil? %>Become a Fan<% else %>You're a Fan<% end %></a>
+			<% end %>
+			
+			<% if @team.fans.empty? %>
+				<div style="font-size:3em;">0</div>
+			<% else %>
+			
+			<div style="font-size:3em;">
+				<%= @team.fans.count %>
+			</div>
+			
+			<table width="100%">
+				<% @team.fans.each do |fan| %>
+					<tr>
+						<td width="25" style="margin:0;">
+							<a href="/users/<%= h fan.user.username %>">
+							<% if fan.user.avatar_file_name.blank? %>
+								<img src="/images/noavatar25.gif" />
+							<% else %>
+								<%= image_tag fan.user.avatar.url(:small) %>
+							<% end %>
+							</a>
+						</td>
+						<td width="100%" style="margin:0;">
+							<a href="/users/<%= h fan.user.username %>" style="text-decoration:none;"><%= h fan.user.username %></a>
+						</td>
+					</tr>
+				<% end %>
+			</table>
+			
+			<% end %>
+		</td>
+		<td width="40%" style="margin:0;padding:0;padding-right:10px;vertical-align:top;">
+			<h3 style="margin-bottom:8px;">Updates</h3>
+			<% if @updates.empty? %>
+				<em>No recent updates.</em>
+			<% else %>
+  			<span id="team_timeline">
+  				<%= render :partial => 'updates' %>
+  			</span>
+			<% end %>	
+		</td>
+		
+		<td width="40%" style="margin:0;padding:0;vertical-align:top;">
+			<h3 style="margin-bottom:8px;">Active &amp; Upcoming Games</h3>
+			<% if @games.empty? %>
+				<em>No games to display.</em>
+			<% else %>
+				<% @dontshowsport = true %>
+				<%= render :partial => 'games/gamelist.html.erb', :collection => @games %>
+			<% end %>
+		</td>
+	</tr>
+</table>
+
+</div>

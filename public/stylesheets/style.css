@@ -1,0 +1,142 @@
+html, body {
+	height:100%;
+}
+
+body {
+	margin:0;
+	padding:0;
+	font-family:Arial,sans-serif;
+	font-size:13px;
+}
+
+#header {
+	
+}
+
+
+a {
+	color:#000000;
+	border-bottom:1px solid #333333;
+	text-decoration:none;
+}
+
+a img {
+	border:0;
+	outline:none;
+}
+
+
+.alertsuccess {
+background-color: #0b5514;
+color:#FFFFFF;
+font-size:1.0em;
+padding:5px;
+padding-left:8px;
+/*background-image:url(/images/alertsuccesscheck3.gif);
+background-repeat:no-repeat;
+background-position:left center;*/
+}
+
+#gameroomheader {
+	background-image:url(/images/gameroomtop.png);
+	height:91px;
+}
+
+#gameroomheadertext {
+	color:#FFFFFF;
+	font-size:3.5em;
+	padding:15px;
+	padding-top:20px;
+	font-family:Georgia,sans-serif;
+	background-image:url(/images/ttgrlogo.png);
+	background-repeat:no-repeat;
+	background-position:top right;
+}
+
+#gameroomheaderlogo {
+	float:right;
+	padding-right:20px;
+}
+
+#gameroomcontent {
+	height: 100%;
+	width:100%;
+}
+
+/*a.menuitem {
+	padding-left:10px;
+	padding-right:10px;
+	margin-right:1px;
+	text-decoration:none;
+	border:none;
+	padding-top:6px;
+	position:relative;
+	top:8px;
+	padding-bottom:3px;
+	display:block;
+}*/
+
+a.menuitem {
+	padding-left:10px;
+	padding-right:10px;
+	margin-right:1px;
+	text-decoration:none;
+	border:none;
+	padding-top:6px;
+	position:relative;
+	top:8px;
+	padding-bottom:3px;
+	display:block;
+}
+
+a.menuon {
+	background-color:#f1f1f1;
+	background-repeat:repeat-x;
+	font-weight:bold;
+	margin-left:1px;
+	position:relative;
+	left:1px;
+	border-bottom:2px solid #510900;
+}
+
+
+a.menuoff {
+	background-repeat:repeat-x;
+	color:#FFFFFF;
+}
+
+.updateitem {
+	padding:4px;
+	border-bottom:1px solid #CCCCCC;
+}
+
+.pagetitle {
+	font-size:1.8em;
+	font-weight:bold;
+	margin-bottom:10px;
+}
+
+.underupdate {
+	font-size:0.9em;
+	color:#555555;
+	margin-top:2px;
+}
+
+
+.underupdate a {
+	text-decoration:none;
+	border:0;
+	color:#333333;
+}
+
+.panetitle {
+padding:6px;
+border-bottom:1px solid #CCCCCC;
+color:#444444;
+font-weight:bold;
+}
+
+.padfix {
+	padding:0;
+	margin:0;
+}

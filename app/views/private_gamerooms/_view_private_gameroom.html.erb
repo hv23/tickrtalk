@@ -1,0 +1,3 @@
+	<div class="content">
+		<h4>Your private gameroom has been created!  <%= link_to "Check-in", "/gameroom/#{@gameroom.game_id}/private_gameroom/#{@gameroom.id}?gameroom_key=#{@gameroom.gameroom_key}", :class => "get", :onclick => "location.reload();" %> now!</h4>
+	<div>

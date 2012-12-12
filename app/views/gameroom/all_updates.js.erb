@@ -1,0 +1,25 @@
+$('#updates_flash').hide();
+
+<% if params[:page] && params[:page].to_i > 1 %>
+	$('.pagination').remove();
+<% end %>
+
+<% if params[:page] == 1 || params[:page].nil? %>
+	$('#updatespane').empty();
+<% end %>
+
+$('#updatespane').append("<%= escape_javascript(render(:partial => 'updates')) %>");
+$("#update_form").attr("action","/update/add_line/<%= @game.id %>");
+$('#private_gameroom_admin').html("");
+
+$('a[rel*=facebox]').facebox();
+$.facebox.settings.opacity = 0.5;
+
+<% @private_gameroom_checkins.each do |checkin| %>
+  stomp.unsubscribe('/topic/private_gameroom_<%= checkin.private_gameroom.gameroom_key %>');	
+<% end %>		
+	
+stomp.unsubscribe('/topic/game_<%= @game.id %>');			
+stomp.unsubscribe('/topic/game_<%= @game.id %>_<%= current_user.username %>_following');
+stomp.unsubscribe('/topic/game_<%= @game.id %>_<%= current_user.username %>');			 	
+stomp.subscribe('/topic/game_<%= @game.id %>');

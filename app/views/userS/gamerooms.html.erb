@@ -1,0 +1,20 @@
+<div class="constraint" style="padding-left:20px;padding-top:20px;">
+
+<h1>Your Gamerooms</h1>
+
+	<h3>Private Gamerooms</h3>
+
+		<% if @private_gamerooms.empty? %>
+			<p>You do not have any active private gamerooms.</p>
+		<% else %>
+	
+		<ul id="checkins_login">
+			<% @private_gamerooms.each do |checkin| %>
+				<li><%= link_to "#{Game.find(checkin.private_gameroom.game_id).name}", "/gameroom/#{checkin.private_gameroom.game_id}/private_gameroom/#{checkin.private_gameroom_id}?gameroom_key=#{checkin.private_gameroom.gameroom_key}" %> - <%= checkin.private_gameroom.login %></li>
+			<% end %>
+		</ul>
+
+	
+	<% end %>
+
+</div>

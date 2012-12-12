@@ -1,0 +1,27 @@
+<% @updates.each do |update| %>
+	<div class="updateitem">
+		<table width="100%" style="padding:0;margin:0;overflow:hidden;">
+			<tr>
+				<td width="40"><div style="width:48px;height:48px;">
+					<% if (update.source == 0) %>
+						<% user = User.find(update.user_id) %>
+						<% if update.user_id != 0 %>
+							<% if user.imageset == 1 %>
+							<img src="/images/itsmarkbao.jpg" />
+							<% end %>
+						<% end %>
+					<% elsif (update.source == 1) %>
+						<img src="<%= update.image_url %>" alt="" />
+					<% end %>
+				</div></td>
+				<td style="padding-left:5px;font-size:1.1em;">
+					<% if (update.source == 0) %>
+					<div><strong><%= h user.username %></strong> <%= linkup_mentions(auto_link(h(update.content))) %></div><div></div>
+					<% elsif (update.source == 1) %>
+					<div><strong><%= h update.twitter_username %></strong> <%= linkup_mentions(auto_link(h(update.content))) %> <span style="font-size:0.8em;"><a href="<%= update.linkto %>" style="color:#666666;border:none;">via Twitter</a></span></div>
+					<% end %>
+				</td>
+			</tr>
+		</table>
+	</div>	
+<% end %>

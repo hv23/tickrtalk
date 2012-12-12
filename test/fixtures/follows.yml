@@ -1,0 +1,7 @@
+one:
+  follower_id: <%= Fixtures.identify(:johnny) %>
+  followed_id: <%= Fixtures.identify(:phu) %>
+
+two:
+  follower_id: <%= Fixtures.identify(:phu) %>
+  followed_id: <%= Fixtures.identify(:johnny) %>

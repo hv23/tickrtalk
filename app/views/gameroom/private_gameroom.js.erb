@@ -1,0 +1,29 @@
+$('#updates_flash').hide();
+
+<% if params[:page] && params[:page].to_i > 1 %>
+	$('.pagination').remove();
+<% end %>
+
+<% if params[:page] == 1 || params[:page].nil? %>
+	$('#updatespane').empty();
+<% end %>
+
+$('#updatespane').append("<%= escape_javascript(render(:partial => 'private_updates')) %>");
+$("#update_form").attr("action","/private_updates/add_line/<%= @private_gameroom.id %>?gameroom_key=<%= @private_gameroom.gameroom_key %>");
+$('#private_gameroom_admin').html("<%= escape_javascript(render(:partial => 'private_gameroom_admin')) %>");
+
+stomp.unsubscribe('/topic/game_<%= @game.id %>');
+stomp.unsubscribe('/topic/game_<%= @game.id %>_<%= current_user.username %>_following');
+stomp.unsubscribe('/topic/game_<%= @game.id %>_<%= current_user.username %>');
+
+<% @private_gameroom_checkins.each do |checkin| %>
+	stomp.unsubscribe('/topic/private_gameroom_<%= checkin.private_gameroom.gameroom_key %>');
+	stomp.unsubscribe('/topic/private_gameroom_<%= checkin.private_gameroom.gameroom_key %>_<%= current_user.username %>');
+<% end %>
+
+stomp.subscribe('/topic/private_gameroom_<%= @private_gameroom.gameroom_key %>');
+stomp.subscribe('/topic/private_gameroom_<%= @private_gameroom.gameroom_key %>_<%= current_user.username %>');
+
+<% if params[:page] == 1 || params[:page].nil? %>
+	<% Orbited.send_data('private_gameroom_'+@private_gameroom.gameroom_key.to_s, "$('#updatespane').prepend('#{escape_javascript(render(:partial => 'checkin_content'))}')") %>
+<% end %>

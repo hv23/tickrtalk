@@ -1,0 +1,290 @@
+<div style="height:100%;max-height:100%;">
+	<table style="height:100%;" class="clearspace">
+		<tr style="height:101px;" class="clearspace">
+			<td style="height:101px;" class="padfix clearspace">
+				<div id="grheader">
+					<% if @game.openfooty_league_id == 72 %>
+						<a href="/gameroom/<%= @game.id %>" id="gameroom_title"><span id="grheadertext" style="float:left;"><%= h @game.name %></span></a>
+					
+					  <%= image_tag("http://soccertv.files.wordpress.com/2008/10/500px-2010_fifa_world_cup_logo_svg.png", :size => "75x75", :alt => "World Cup 2010", :style => "margin-left:30px; vertical-align:middle;") %>
+					<% else %>
+						<a href="/gameroom/<%= @game.id %>" id="gameroom_title"><span id="grheadertext"><%= h @game.name %></span></a>
+					<% end %>
+				  
+				</div>
+			</td>
+		</tr>
+		<tr style="height:44px;" class="clearspace">
+			<td style="height:44px;" class="padfix clearspace">
+				<%= link_to '<img src="/images/ttlg.png" />', root_url %>
+			</td>
+		</tr>
+		<tr style="height:100%;" class="clearspace">
+			<td style="height:100%;" class="clearspace">
+				<table width="100%" style="height:100%;" class="clearspace">
+					<tr>
+						<td width="170" valign="top" style="vertical-align:top;" class="clearspace">
+							<div style="width:170px;">
+								<div class="panetitle"><% if current_user %>Logged In<% else %>Not logged in <% end %></div>
+								<div class="pane">									
+									
+									<% if current_user %>
+									Logged in as <strong><%= link_to current_user.username, "/users/#{current_user.username}" %></strong><br />
+									<%= link_to "logout", logout_path %>
+									
+									<% else %>
+									
+									<strong>Login to TickrTalk</strong>
+										<% store_location %>
+										
+										<% form_for :user, :url => {:controller => "user_sessions", :action => "create"} do |form| %>
+											<label class="user_label">username:</label>
+											<%= form.text_field :username, :size => 20 %>
+											<label class="user_label">password:</label>
+											<%= form.password_field :password, :size => 20 %> 
+											
+											<%= form.submit "Login", :class => "user_button" %>
+										<% end %>
+									<br />
+  									<% @gameroom = "yes" %>
+  									<strong>Sign Up for TickrTalk!</strong>
+										<% form_for :user, :url => {:controller => "users", :action => "create"} do |form| %>
+											<label class="user_label">username:</label>
+											<%= form.text_field :username, :size => 20 %>
+											
+											<label class="user_label">password:</label>
+											<%= form.password_field :password, :size => 20%> 
+											
+											<label class="user_label">password confirmation:</label>
+											<%= form.password_field :password_confirmation, :size => 20 %> 
+											
+											<label class="user_label">email (no spam):</label>
+											<%= form.text_field :email, :size => 20 %> 
+											
+											<%= form.submit "Signup!", :class => "user_button" %>
+										<% end %>
+									<% end %>
+								</div>
+								<div class="panetitle">Game Details</div>
+								<div class="pane">
+									<strong>Game Start:</strong><br />
+									<%= @game.date.strftime("%A, %b %d") %><br /><%= @game.game_datetime.strftime("%I:%M %p %Z") %>
+									<br /><br />
+									<strong>Teams:</strong><br />
+									
+									<% unless @game.league == "soccer" %>
+									
+									  <a href="/teams/<%= Team.first(:resource => @game.home_team).id %>"><%= h Team.first(:resource => @game.home_team).team_name %></a> vs. <a href="/teams/<%= Team.first(:resource => @game.away_team).id %>"><%= h Team.first(:resource => @game.away_team).team_name %></a>
+									  
+									<% else %>  
+									
+										<a href="/teams/<%= Team.first(:openfooty_team_id => @game.openfooty_home_team_id).id %>"><%= h @game.home_team %></a> vs. <a href="/teams/<%=  Team.first(:openfooty_team_id => @game.openfooty_away_team_id).id %>"><%= h @game.away_team %></a>
+									
+								  <% end %>
+									  
+								</div>
+							</div>
+						</td>
+						<td width="90%" valign="top" style="vertical-align:top;padding-top:0;">
+							
+							<div style="height:100%;background-color:#7c0000;">
+							
+								<table width="100%" style="height:100%;" class="clearspace">
+									<tr>
+										<td height="46" class="clearspace">
+											<div id="updatetitle">
+												<img src="/images/updates.png" style="vertical-align:middle;" />
+												
+												<div id="activity">
+													<img style="vertical-align:middle;" src="/images/ajax-loader-squares.gif" />
+												</div>
+																								
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td height="48" class="clearspace">
+																						
+											<div id="updaterbox">
+												<div id="updaterleft">
+													<div id="updaterright">																																									
+														<div id="updaterinput">			
+																																																									
+															<% form_for :update, @update, :html => {:id => "update_form"}, :url => { :controller => "update", :action => :add_line, :id => @game.id } do |f| %>
+															
+																<% if current_user %>
+																														
+																	<% if @in_reply_to %>
+															
+			                        		  							<%= f.text_field :content, :value => "@#{h @in_reply_to} ", :rows => 70, :class => 'updatetext', :title => "click here, type your update, then hit enter." %>
+																		<%= f.hidden_field :in_reply_to_update_id, :value => @in_reply_to_update_id %>
+																		<%= f.hidden_field :in_reply_to_user, :value => @in_reply_to %>
+																
+																	<% else %>
+															
+			                        		  							<%= f.text_field :content, :rows => 70, :class => 'updatetext', :title => "click here, type your update, then hit enter." %>
+																		<%= f.hidden_field :in_reply_to_update_id %>
+																		<%= f.hidden_field :in_reply_to_user %>
+															
+																	<% end %>
+																
+																<% else %>
+														
+		                        		  							<%= f.text_field :content, :rows => 70, :class => 'updatetext', :disabled => true, :title => "click here, type your update, then hit enter." %>														
+
+																<% end %>
+																
+															<% end %>									
+																														
+														</div>																																										
+													</div>
+												</div>
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td class="clearspace">
+											<div style="padding:8px;color:#857677;" id="tablist">
+												<% if current_user %>
+													<%= link_to "all", {:action => "all_updates", :id => @game.id}, :class => "get atab atabcurrent", :id => "all_updates_link", :style => "color:#857677;text-decoration:none;", :title => "all", :onclick => 'taba("all_updates_link")' %>
+													<%= link_to "replies<span id='replies_badge' class='badge'>#{@replies_count unless @replies_count.nil?}</span>", {:action => "replies", :id => @game.id}, :class => "get atab", :id => "replies_link", :style => "color:#857677;text-decoration:none;", :title => "replies", :onclick => 'taba("replies_link")' %>
+													
+													<%= link_to "following", {:action => "following", :id => @game.id}, :class => "get atab", :id => "following_link", :style => "color:#857677;text-decoration:none;", :title => "following", :onclick => 'taba("following_link")' %>
+													<%= link_to "tickrtalk only", {:action => "tickrtalk_only", :id => @game.id}, :class => "get atab", :id => "tickrtalk_only_link", :style => "color:#857677;text-decoration:none;", :title => "tickrtalk_only", :onclick => 'taba("tickrtalk_only_link")' %>
+													<%= link_to "twitter only", {:action => "twitter_only", :id => @game.id}, :class => "get atab", :id => "twitter_only_link", :style => "color:#857677;text-decoration:none;", :title => "twitter_only", :onclick => 'taba("twitter_only_link")' %>
+														<% @private_gameroom_checkins.each do |checkin| %>
+															<% private_gameroom_name = checkin.private_gameroom.login.gsub(' ', '_') %>
+															<%= link_to "#{private_gameroom_name}", {:action => "private_gameroom", :id => @game.id, :private_gameroom_id => checkin.private_gameroom.id, :gameroom_key => checkin.private_gameroom.gameroom_key}, :class => "get atab", :id => "#{private_gameroom_name}_link", :style => "color:#857677;text-decoration:none;", :title => "#{private_gameroom_name}", :onclick => "taba('#{private_gameroom_name}_link')" %>
+														<% end %>														
+												<% end %>
+																																				
+												<% if current_user && current_user.authorized? %>
+												
+													<% if session[:send_to_twitter] %>													
+														<div>
+															send to twitter: <%= link_to "off", {:action => "send_to_twitter", :id => @game.id}, :class => "get", :id => "send_to_twitter", :style => "color:#857677;font-size:0.9em;text-decoration:underline;" %>
+														</div>
+													<% else %>
+														<div>
+															send to twitter: <%= link_to "on", {:action => "send_to_twitter", :id => @game.id}, :class => "get", :id => "send_to_twitter", :style => "color:#857677;font-size:0.9em;text-decoration:underline;" %>
+														</div>
+													<% end %>
+												<% end %>
+												
+												<% if current_user && current_user.facebook_authorized? && session[:send_to_facebook] %>
+												
+													<div>
+														send to facebook: <%= link_to "off", {:action => "send_to_facebook", :id => @game.id}, :class => "get", :id => "send_to_facebook", :style => "color:#857677;font-size:0.9em;text-decoration:underline;" %>
+													</div>
+												<% elsif current_user && current_user.facebook_authorized? && session[:send_to_facebook].nil? %>
+													<div>
+														send to facebook: <%= link_to "on", {:action => "send_to_facebook", :id => @game.id}, :class => "get", :id => "send_to_facebook", :style => "color:#857677;font-size:0.9em;text-decoration:underline;" %>
+													</div>
+													
+												<% elsif current_user && current_user.facebook_authorized? %>
+													<div>
+														Facebook status permissions are <%= link_to "off", account_url, :style => "color:#857677;font-size:0.9em;text-decoration:underline;" %>
+													</div>
+												<% end %>
+										
+													
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td height="100%" class="clearspace">
+											
+											<div id="updates" style="height:100%;">
+												<div style="padding:0px;">
+																										
+													<div id="updates_flash">
+														<%= render :partial => "updates_flash" %>
+													</div>
+
+													<div id="updatespane" class="remote_output">																																									
+                            							<%= render :partial => "updates" %>
+													</div>
+													
+												</div>
+											</div>
+											
+										</td>
+									</tr>
+								</table>
+								
+							</div>
+							
+						</td>
+						<td width="210" valign="top" style="vertical-align:top; line-height:2.4em;" class="clearspace">
+							<div style="width:210px;">
+							  <div class="panetitle">Score</div>
+							  <div id="score">
+  								
+									<%= render :partial => "score" %>	
+									
+								</div>
+								
+								<% if current_user %>							
+								
+								  <%= render :partial => "new_private_gameroom" %>
+								
+								<div>
+									
+  								<div id="private_gameroom_admin" style="margin-bottom:10px;">	
+  									<%= render :partial => "private_gameroom_admin" %>
+  								</div>
+								
+  								<% if admin? %>
+  								
+  								<div class="panetitle">Admin</div>
+  							  
+  									<strong><span style="color:#FFF;">Twitter Search Admin:</span></strong>
+  									<% form_tag "/gameroom/"+@game.id.to_s+"/twitter_admin", :id => "twitter_search_admin" do -%>
+  										<%= text_field_tag 'search_term' %>
+  										<%= hidden_field_tag 'game_id', @game.id %>
+  									<% end -%>
+  									<span style="color:#FFF;font-size:0.8em;"><i>(one phrase at a time)</i></span>
+							      
+							      <br />
+							      
+							      <% if !@game.keywords.empty? %>
+  							      <span style="color:#FFF;">Other Keywords</span>
+							      
+  							      <ul style="color:#FFF;">
+  							        <% @game.keywords.compact.each do |word| %>
+  							          <li><%=h word %> - <%= link_to "delete", "/gameroom/#{@game.id.to_s}/twitter_admin?delete_keyword=true&keyword=#{h word}&game_id=#{@game.id.to_s}", :style => "color:#FFF;" %></li>
+  							        <% end %>
+  							      </ul>
+							    
+    									<br />
+  									<% end %>
+  									
+  									<span style="color:#FFF;">
+  									<strong>Scores Admin:</strong>
+  									<% form_tag "/gameroom/"+@game.id.to_s+"/scores_admin", :id => "scores_admin" do -%>
+  										<label>Home:</label> <%= text_field_tag 'home_score', @game.home_score %><br />
+  										<label>Away:</label> <%= text_field_tag 'away_score', @game.away_score %>
+  										<%= hidden_field_tag 'game_id', @game.id %>
+  										
+  										<%= submit_tag "Update" %>
+  									<% end -%>
+  									</span>
+							
+  									<br />
+							
+  								<% end %>
+								
+								<% end %>
+								
+								<%= javascript_tag "var refreshScore = setInterval(function() {jQuery.ajax({dataType:'script', type:'get', url:'/gameroom/#{@game.id}/refresh_score'})}, 105 * 1000)" %>
+							
+								</div>
+							
+							</div>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+</div>

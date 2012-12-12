@@ -1,0 +1,17 @@
+development:
+    :enable_starttls_auto: true
+    :address: smtp.gmail.com
+    :port: 587
+    :domain: tickrtalk.com
+    :user_name: johnny@tickrtalk.com
+    :password: tIcKr333
+    :authentication: plain
+
+production:
+    :enable_starttls_auto: true
+    :address: smtp.gmail.com
+    :port: 587
+    :domain: tickrtalk.com
+    :user_name: johnny@tickrtalk.com
+    :password: tIcKr333
+    :authentication: plain

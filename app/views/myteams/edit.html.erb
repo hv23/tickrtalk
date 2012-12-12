@@ -1,0 +1,63 @@
+<div class="constraint" style="padding-left:25px;padding-top:20px;">
+	<div class="pagetitle">Edit My Teams</div>
+	<table id="edit_myteams_table">
+		<tr>
+			<td width="60%" valign="top" class="padfix">
+				<div class="subtitle">My Teams</div>
+					<% if @teams.empty? %>
+					<div id="teamslist">
+						<span id="no_teamslist">You don't have any teams. Add one on the right.</span>
+					</div>
+					<% else %>
+					<div id="teamslist">
+						<% @teams.each do |team| %>
+						<div id="team-<%= team.id %>" class="add_team">
+							<div style="float:right;">
+								<%= link_to "(remove)", {:action => "removeteam", :controller => "myteams", :id => team.id}, :style => "font-size:0.9em;color:#555555;border:0;", :class => "get" %>
+							</div>
+						
+							<%= h team.team_name %> | <%= h team.league.upcase %>
+						</div>
+						<% end %>
+					</div>
+					<% end %>
+				</div>
+			</td>
+			<td width="40%" valign="top" style="vertical-align:top;">
+				<div class="subtitle">Add a Team</div>
+				<script src="/javascripts/jquery.autocomplete.js" type="text/javascript"></script>
+				<link href="/stylesheets/jquery.autocomplete.css" rel="stylesheet" type="text/css" />
+				
+        <input type="text" value="" style="width:250px;" id="teaminput" onkeypress="if (enterPressed(event)) {addTeam(); return false}" />
+        <input type="text" id="teamid" name="vteamid"  style="width:1px;visibility:hidden;" value="" />
+				<div style="font-size:0.9em;color:#555555;">Type a team name above.</div>
+				
+				<script type="text/javascript">
+				function findValue(li) {
+					if( li == null ) return alert("No match!");
+					if( !!li.extra ) var sValue = li.extra[0];
+					else var sValue = li.selectValue;
+					document.getElementById('teamid').value=sValue;
+				}
+				
+				$(function() {
+				$("#teaminput").autocomplete(
+					"/myteams/autocomplete/<%= params[:id] %>",
+					{
+						onItemSelect:findValue,
+						onFindValue:findValue,
+						autoFill:false
+					}
+				);
+				});
+				</script>
+				<div style="margin-top:5px;margin-bottom:15px;">
+					<input type="button" value="Add Team" onclick="addTeam()" />
+				</div>
+				<div style="font-size:0.85em;color:#555555;">
+					Don't see your favourite team here?<br />Teams are only listed here when the season starts.<br />You can add it when it does!
+				</div>
+			</td>
+		</tr>
+	</table>
+</div>

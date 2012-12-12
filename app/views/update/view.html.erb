@@ -1,0 +1,73 @@
+<% unless params[:facebox] == "true" %>
+
+	<style type="text/css">
+	body {
+		background-color:#615e5d;
+	}
+	</style>
+	<div class="constraint" style="padding-left:25px;">
+		<div style="height:75px;"></div>
+		<div style="width:560px;margin:auto;background-color:#b56b6d;background-image:url(/images/singleupdate-gamebg.gif);background-repeat:repeat-x;padding:20px;padding-top:10px;padding-bottom:10px;color:#FFFFFF;font-family:Georgia,Arial,sans-serif;font-size:1.8em;">
+		<% unless @update.game.nil? %>
+			<a href="/gameroom/<%= @update.game.id %>" style="color:#FFFFFF;text-decoration:none;"><%= @update.game.name %></a>
+		<% end %>
+		</div>
+		<div style="width:560px;margin:auto;background-color:#FFFFFF;padding:20px;">
+			<div style="font-size:2.5em;">
+			  <% if @update.source == 1 %>
+		      <%= linkup_twitter_mentions(auto_link(h(@update.content))) %>			  
+			  <% else %>
+			    <%= linkup_mentions(auto_link(h(@update.content))) %>
+			  <% end %>
+			</div>
+			<div style="font-size:1.2em;color:#555555;">
+				<%= time_ago_in_words(@update.date_created) %> ago
+				<% if @update.in_reply_to_update_id && @update.in_reply_to_user %>
+					<%= link_to "in reply to #{h @update.in_reply_to_user}", "/update/#{h @update.in_reply_to_update_id}", :class => "in_reply_to" %>
+				<% end %>
+				
+				<% if @update.source == 0 %>
+				  <%= link_to "Reply", "/gameroom/#{ @update.game.id }?in_reply_to=#{@update.user.username}&in_reply_to_update_id=#{@update.id}&game_id=#{@update.game_id}", :class => "update_reply_to",  :title => "Reply to #{h @update.user.username}", :id => "in_reply_to_#{@update.id}" %>	
+				<% end %>
+			</div>
+		</div>
+		<div style="text-align:center;"><img src="/images/singleupdate-under.png" /></div>
+		<div style="text-align:right;width:560px;margin:auto;padding:20px;padding-top:0;font-size:2.5em;line-height:1em;color:#FFFFFF;padding-right:120px;">
+			<a href="/users/<%= h @update.user.username %>" style="color:#FFFFFF;text-decoration:none;"><%= h @update.user.username %></a>
+		</div>
+	</div>
+
+<% else %>
+
+	<div class="constraint" style="padding:0;width:100%;">
+		<div style="width:100%;margin:auto;background-color:#b56b6d;background-image:url(/images/singleupdate-gamebg.gif);background-repeat:repeat-x;padding:25px 0 25px 0;color:#FFFFFF;font-family:Georgia,Arial,sans-serif;font-size:2em;">
+		<% unless @update.game.nil? %>
+			<a href="/gameroom/<%= @update.game.id %>" style="color:#FFFFFF;text-decoration:none;padding-left:20px;"><%= @update.game.name %></a>
+		<% end %>
+		</div>
+		<div style="width:100%;margin:auto;background-color:#FFFFFF;padding:30px 0 30px 0;line-height:2em;">
+			<div style="font-size:2.0em;padding-left:20px;">
+			  <% if @update.source == 1 %>
+		      <%= linkup_twitter_mentions(auto_link(h(@update.content))) %>			  
+			  <% else %>
+			    <%= linkup_mentions(auto_link(h(@update.content))) %>
+			  <% end %>
+			</div>
+			<div style="font-size:1.2em;color:#555555;padding-left:20px;padding-right:20px;">
+				<%= time_ago_in_words(@update.date_created) %> ago
+				<% if @update.in_reply_to_update_id && @update.in_reply_to_user %>
+					<%= link_to "in reply to #{h @update.in_reply_to_user}", "/update/#{h @update.in_reply_to_update_id}", :class => "in_reply_to" %>
+				<% end %>
+				
+				<% if @update.source == 0 %>
+				  <%= link_to "Reply", "/gameroom/#{ @update.game.id }?in_reply_to=#{@update.user.username}&in_reply_to_update_id=#{@update.id}&game_id=#{@update.game_id}", :class => "update_reply_to",  :title => "Reply to #{h @update.user.username}", :id => "in_reply_to_#{@update.id}" %>	
+				<% end %>
+			</div>
+		</div>
+		<div style="text-align:center;"><img src="/images/singleupdate-under_fb.png" /></div>
+		<div style="text-align:right;margin-top:-10px;padding:0 160px 10px 0;font-size:2em;line-height:1em;color:#FFFFFF;background-color:#615e5d;">
+			<a href="/users/<%= h @update.user.username %>" style="color:#FFFFFF;text-decoration:none;"><%= h @update.user.username %></a>
+		</div>
+	</div>
+
+<% end %>

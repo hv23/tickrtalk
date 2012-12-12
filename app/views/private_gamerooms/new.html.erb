@@ -1,0 +1,130 @@
+<% javascript_tag do -%>
+
+	jQuery.ajaxSetup({
+	  'beforeSend': function(xhr) {xhr.setRequestHeader("Accept", "text/javascript")}
+	});
+
+	jQuery.fn.submitWithAjax = function() {
+	  this.submit(function() {
+	    $.post(this.action, $(this).serialize(), null, "script");
+	    return false;
+	  })
+	  return this;
+	};
+
+	$(document).ready(function() {
+	  $(".new_private_gameroom").submitWithAjax();
+	});
+	
+	$(document).ready(function() {
+	  $("#find_contacts").submitWithAjax();
+	});
+	
+	$(document).ready(function() {
+	  $("#follows_contacts").submitWithAjax();
+	});
+	
+	$(document).ready(function() {
+	  $("#followed_contacts").submitWithAjax();
+	});
+	
+	$(document).ajaxStart(function () {
+		$('#activity_fb').show();
+	}).ajaxStop(function (){
+		$('#activity_fb').hide();
+	});
+	
+	$(document).ready(function() {
+	  $("#contact_error").hide();
+	});
+
+<% end -%>
+
+<div class="constraint" style="padding-left:20px;padding-top:10px;">
+
+	<% unless flash[:notice].nil? %>
+		<div class="notice">
+			<%= flash[:notice] %>	
+		</div>
+	<% end %>
+
+	<div id="private_gameroom">
+		<h2>Create a Private Gameroom</h2>
+
+		<% form_for @gameroom do |f| %>
+
+		  <p>
+		    <label>Gameroom Name</label>
+			<span style="color:#999;font-size:11px;">(required)</span><br />
+		    <%= f.text_field :login, :class => "login_field" %>
+		  </p>
+
+		  <p>
+		    <label>Invite your friends by Email</label><br />
+		    <%= text_area_tag "invitees", nil, :class => "addresses_text_area" %><br />
+
+			<span style="color:#999;font-size:11px;">Separate multiple email addresses with commas, ex: foo@tickrtalk.com, bar@tickrtalk.com</span>
+		  </p>
+
+			<%= f.hidden_field :game_id, :value => params[:game_id] %>
+		  <p style="padding-bottom:10px;"><%= f.submit "Create!", :class => "invite_button" %></p>
+		<% end %>
+		
+		<div id="follows_form" class="dotted" style="width:600px;margin-bottom:10px;">
+		  <div class="subtitle">Invite your Followers or People you Follow</div>
+		             
+        <table style="width:500px;">
+  				<tr>
+  					<th>People you follow:</th>
+  					<th>People following you:</th>
+  				</tr>
+				
+  				<tr>
+  				  <% form_tag '/private_gamerooms/add_follow', :id => 'follows_contacts' do -%>
+  					  <td><%= select_tag "follows", options_from_collection_for_select(@user_follows, 'email', 'username'), :multiple => true, :style => "width:150px;height:70px;" %><br />
+  					      <%= submit_tag "Add" %></td>
+  					<% end -%>
+  					
+  					<% form_tag '/private_gamerooms/add_followed', :id => 'followed_contacts' do -%>
+  					  <td><%= select_tag "followed", options_from_collection_for_select(@user_followed, 'email', 'username'), :multiple => true, :style => "width:150px;height:70px;" %><br />
+  					      <%= submit_tag "Add" %></td>
+  					<% end -%>
+  				</tr>
+  			</table>
+		</div>
+		
+		<div id="contact_form" style="width:600px;" class="dotted">
+			<div class="subtitle">Find your friends by Email</div>
+			
+			<% form_tag '/private_gamerooms/find_contacts', :id => 'find_contacts' do -%>
+				<table style="width:500px;">
+					<tr>
+						<th style="padding-left:8px;">Email Type</th>
+						<th style="padding-left:8px;">Login</th>
+						<th style="padding-left:8px;">Password</th>
+					</tr>
+					
+					<tr>
+						<td style="padding-left:8px;"><%= select_tag "contact_type", options_for_select(["Gmail", "Yahoo", "Hotmail", "AOL"]) %></td>
+						<td style="padding-left:8px;"><%= text_field_tag "contact_login", nil, :size => 30 %></td>
+						<td style="padding-left:8px;"><%= password_field_tag "contact_password" %></td>
+						<td style="padding-left:8px;"><%= submit_tag "Search Contacts" %></td>
+					</tr>
+				</table>
+				
+			<% end -%>
+			
+		</div>
+		
+		<div id="contact_error" style="color:#4F0000;padding-bottom:8px;"></div>
+		
+		<span style="color:#999;font-size:11px;line-height:1em;">*TickrTalk does not store your login and your password is submitted securely. We do not save any of this information for your privacy and security.</span>
+
+	</div>
+	
+	<div id="activity_fb" style="margin-top:10px;">
+		<img style="vertical-align:middle;" src="/images/ajax-loader-squares.gif" />
+  	<span style="font-style:italic;margin-left:10px;">This might take awhile...</span>
+	</div>
+		
+</div>

@@ -1,0 +1,88 @@
+var numrefreshes = 0
+
+function scrollToBottom() {
+	$("#updates").scrollTo(document.getElementById("updates").scrollHeight, 300, {queue:false})
+}
+
+function refreshUpdates() {
+	//alert(updatefilter);
+	
+	origsh = $("#updatespane").attr("scrollTop")
+	origheight = $("#updatespane").attr("scrollHeight")
+	compheight = parseInt(getComputedHeight('updatespane'))
+	actheight = origsh + compheight
+	
+	$.ajax({
+		type: "POST",
+		url: "/gameroom/fetchupdates/",
+		data: "gameid=" + gameid,
+		success: function(msg){
+			$("#updatespane").html(msg)
+
+			if(actheight == origheight) {
+				scrollToBottom();
+			}
+			
+			if(numrefreshes==0) {
+				scrollToBottom();
+			}
+			
+			numrefreshes = numrefreshes + 1;
+			
+			jQuery('span[class*=timeago]').timeago();
+		}
+	});
+}
+
+function switchfilter(filterid) {
+	updatefilter = filterid;
+	$('.menuon').removeClass('menuon').addClass('menuoff');
+	$('#filter-'+filterid).removeClass('menuoff');
+	$('#filter-'+filterid).addClass('menuon');
+}
+
+function sendUpdate() {
+	origsh = $("#updatespane").attr("scrollHeight")
+	update = document.getElementById('updatetext').value
+	//alert(update)
+	document.getElementById('updatetext').disabled = true
+	document.getElementById('updatetext').blur()
+	
+	$.ajax({
+		type: "POST",
+		url: "/gameroom/sendupdate/",
+		data: "gameid=" + gameid + "&text=" + escape(update),
+		success: function(msg){
+			//$("#updatespane").html(msg)
+			document.getElementById('updatetext').disabled = false;
+			document.getElementById('updatetext').value = '';
+			document.getElementById('updatetext').focus();
+			
+			scrollToBottom();
+		}
+	});
+	
+	if(origsh == 0) {
+		scrollToBottom();
+	}
+}
+
+$(function() {
+$('#updatetext').keyup(function(e) {
+	if(e.keyCode == 13) {
+		sendUpdate();
+	}
+});
+});
+
+function toggleHideTwitter() {
+	if (src_twitter==1) {
+		$('.src_twitter').hide();
+		src_twitter = 0;
+		$('#hidetwitter').text('show Twitter updates')
+	} else {
+		$('.src_twitter').show();
+		src_twitter = 1;
+		$('#hidetwitter').text('hide Twitter updates')
+	}
+}

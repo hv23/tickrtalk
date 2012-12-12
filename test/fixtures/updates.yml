@@ -1,0 +1,44 @@
+update_001:
+  id: 1
+  user_id: <%= Fixtures.identify(:johnny) %>
+  source: 0
+  game_id: 1
+  sourcename: "Tickrtalk"
+  content: "Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?"
+  date_created: "2009-12-10 11:20:00"
+
+update_002:
+  id: 2
+  user_id: <%= Fixtures.identify(:johnny) %>
+  source: 0
+  game_id: 2
+  sourcename: "Tickrtalk"
+  content: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo."
+  date_created: "2009-12-10 11:20:00"
+
+update_003:
+  id: 3
+  user_id: <%= Fixtures.identify(:johnny) %>
+  source: 0
+  game_id: 2
+  sourcename: "Tickrtalk"
+  content: "@johnny Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo."
+  date_created: "2009-12-10 11:20:00"
+  
+update_004:
+  id: 4
+  user_id: <%= Fixtures.identify(:phu) %>
+  source: 0
+  game_id: 2
+  sourcename: "Tickrtalk"
+  content: "Perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo."
+  date_created: "2009-12-10 11:20:00"
+  
+update_005:
+  id: 5
+  user_id: 0
+  source: 1
+  game_id: 2
+  sourcename: "Twitter"
+  content: "I am from Twitter!"
+  date_created: "2009-12-10 11:20:00"

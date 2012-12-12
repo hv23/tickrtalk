@@ -1,0 +1,40 @@
+<% javascript_tag do -%>
+
+	jQuery.ajaxSetup({
+	  'beforeSend': function(xhr) {xhr.setRequestHeader("Accept", "text/javascript")}
+	});
+
+	jQuery.fn.submitWithAjax = function() {
+	  this.submit(function() {
+	    $.post(this.action, $(this).serialize(), null, "script");
+	    return false;
+	  })
+	  return this;
+	};
+
+	$(document).ready(function() {
+	  $("#add_contacts").submitWithAjax();
+	});
+	
+	$(document).ready(function() {
+	  $("#contact").submitWithAjax();
+	});
+	
+	$('a#find_more_contacts').live('click', function (event) 
+	{ 
+		$('#contact_form').html('<%= escape_javascript(render(:partial => 'private_gamerooms/find_contacts')) %>');
+		$("#contact_error").hide();
+	});
+	
+<% end -%>
+
+<div class="subtitle">Add a friend from <%= params[:contact_type] %> <%= link_to "(Find more contacts)", '#', :id => 'find_more_contacts', :style => "font-weight:normal; font-size:11px;color:#333;" %></div>
+
+<% form_tag '/private_gamerooms/add_contacts', :id => 'add_contacts' do -%>
+	<%= text_field_tag "contact", nil, :size => 50, :onkeyup => "searchContacts();" %>  
+	<%= submit_tag "Add" %>
+<% end -%>
+
+<div style="padding-top:4px; margin-bottom:10px;" id="contactresult">
+	<span style="color:#555555;">Type a name above.</span>
+</div>

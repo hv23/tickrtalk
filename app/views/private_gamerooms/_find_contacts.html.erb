@@ -1,0 +1,47 @@
+<% javascript_tag do -%>
+
+	jQuery.ajaxSetup({
+	  'beforeSend': function(xhr) {xhr.setRequestHeader("Accept", "text/javascript")}
+	});
+
+	jQuery.fn.submitWithAjax = function() {
+	  this.submit(function() {
+	    $.post(this.action, $(this).serialize(), null, "script");
+	    return false;
+	  })
+	  return this;
+	};
+	
+	$(document).ready(function() {
+	  $("#find_contacts").submitWithAjax();
+	});
+	
+	$(document).ajaxStart(function () {
+		$('#activity_fb').show();
+		$('#activity_contacts').show();
+	}).ajaxStop(function (){
+		$('#activity_fb').hide();
+		$('#activity_contacts').hide();
+	});
+
+<% end -%>
+
+<div class="subtitle">Find your friends by Email</div>
+
+<% form_tag '/private_gamerooms/find_contacts?type=fill', :id => 'find_contacts' do -%>
+	<table style="width:500px;">
+		<tr>
+			<th>Email Type</th>
+			<th>Login</th>
+			<th>Password</th>
+		</tr>
+		
+		<tr>
+			<td><%= select_tag "contact_type", options_for_select(["Gmail", "Yahoo", "Hotmail", "AOL"]) %></td>
+			<td><%= text_field_tag "contact_login", nil, :size => 30 %></td>
+			<td><%= password_field_tag "contact_password" %></td>
+			<td><%= submit_tag "Search Contacts" %></td>
+		</tr>
+	</table>
+		
+<% end -%>

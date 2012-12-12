@@ -1,0 +1,5 @@
+one:
+  login: "test_game"
+  game_id: 1
+  user_id: <%= Fixtures.identify(:johnny) %>
+  gameroom_key: <%= SecureRandom.hex(14) %>

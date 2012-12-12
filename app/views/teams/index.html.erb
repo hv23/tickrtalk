@@ -1,0 +1,42 @@
+<div class="constraint teams_content" style="padding-left:20px;">
+	<table width="100%">
+		<tr>
+			<td width="30%" valign="top" style="vertical-align:top;">
+				<h2 style="margin-bottom:0;margin-top:10px;">Search for a Team</h2>
+				<em>'New York' or 'Yankees', not 'New York Yankees'</em>
+				<div style="margin-top:10px;">
+					<input type="text" value="" id="teamsearch" style="font-size:1.5em;width:97%;" onkeyup="searchTeams();" />
+					<div style="padding-top:4px;" id="teamsearchresult">
+						<span style="color:#555555;">Enter a search query above.</span>
+					</div>
+				</div>
+			</td>
+			<td width="70%" valign="top" style="vertical-align:top;">
+			  <div class="dotted_under">
+  				<h2 style="margin-bottom:10px;">List teams in...</h2>
+  				<% @leagues.each do |league| %>
+  					<a href="/teams/league/<%= league.short %>" style="margin-right:20px;font-size:1.8em;"><strong><%= league.short.upcase %></strong></a>
+  				<% end %>
+  			</div>
+
+        <div class="dotted_under">
+  				<h2 style="margin-bottom:10px;">Teams Playing Now</h2>
+  				<% if @gamesnow.empty? %>
+  					No games are on now.
+  				<% else %>
+  					<%= render :partial => "teamrow", :collection => @gamesnow %>
+  				<% end %>
+  			</div>
+        
+        <div class="dotted_under">
+  				<h2 style="margin-bottom:10px;">Upcoming Teams</h2>
+  				<% if @gamesupcoming.empty? %>
+  					No upcoming games.
+  				<% else %>
+  					<%= render :partial => "teamrow", :collection => @gamesupcoming %>
+  				<% end %>
+  			</div>
+			</td>
+		</tr>
+	</table>
+</div>

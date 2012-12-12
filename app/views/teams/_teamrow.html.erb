@@ -1,0 +1,11 @@
+<% team1 = Team.first(:resource => teamrow.home_team) %>
+<% team2 = Team.first(:resource => teamrow.away_team) %>
+<% unless team1.nil? || team2.nil? %>
+	<div style="font-size:1.5em;">
+		<a href="/teams/<%= team1.id %>"><strong><%= team1.team_name %></strong></a> 
+		<span style="font-size:0.8em">vs.</span> 
+		<a href="/teams/<%= team2.id %>"><strong><%= team2.team_name %></strong></a>
+		
+		<%= team1.league.upcase %>
+	</div>
+<% end %>

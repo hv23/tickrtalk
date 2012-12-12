@@ -1,0 +1,8 @@
+<% javascript_tag do -%>
+	jQuery(document).ready(function() {
+		jQuery('a[rel*=facebox]').facebox();
+		 $.facebox.settings.opacity = 0.5;
+	});
+<% end -%>
+
+<strong><%= link_to '<img src="/images/newgameroom.png" />', new_private_gameroom_url(:game_id => @game.id), :rel => "facebox" %></strong>

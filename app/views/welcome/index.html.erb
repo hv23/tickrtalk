@@ -1,0 +1,124 @@
+<div class="constraint">
+	<div style="text-align:center;font-size:2.5em;margin-top:30px;margin-bottom:10px;">
+		<strong><img src="/images/beapart.gif" /></strong>
+	</div>
+</div>
+<div id="instruction_bar"><div class="constraint"><img src="/images/instruction.png" /></div></div>
+<script src="/javascripts/jquery.liscroll.js" type="text/javascript"></script>
+
+<div id="tickerpane">
+	<table width="100%" class="pad_fix">
+		<tr class="pad_fix">
+			<td class="pad_fix" style="width:151px;" id="live-left">
+				&nbsp;
+			</td>
+			<td class="pad_fix" id="tickercont">
+			    <span style="color:#AAAAAA;">
+			    	Loading...
+			    </span>
+			</td>
+		</tr>
+	</table>
+</div>
+
+<div id="homefocusarea">
+	<div class="constraint">
+		<table width="100%" class="pad_fix" cellpadding="0" cellspacing="0">
+			<tr class="pad_fix">
+				<td class="pad_fix" width="40%" id="hfa_left">
+					<div id="hfa_left_in">
+						<div style="height:10px;"></div>
+						<!-- {hfa_left_box w/current} -->
+						<a href="#" class="hfa_left_box hfa_left_box_current">
+							<div class="hfa_left_box_title">Public Timeline</div>
+							<div class="hfa_left_box_subti">Chatter across TickrTalk and Twitter</div>
+						</a>
+						
+						<!-- {section header} -->
+						
+						<% unless @big_game.nil? %>
+						
+						<div class="hfa_left_sectionheader">THE BIG GAME. YES, YOU WILL BE WATCHING THIS</div>
+						<a href="/gameroom/<%= @big_game.id %>" class="hfa_left_box">
+							<div class="hfa_left_box_title"><%= @big_game.name %> <span style="color:#999"><%= @big_game.league.upcase %></span></div>
+							<div class="hfa_left_box_subti">
+							  <% if @big_game.game_datetime > Time.now %>
+							    starting in <%= time_ago_in_words(@big_game.game_datetime) %>
+							  <% elsif @big_game.game_datetime < Time.now %>
+							    started <%= time_ago_in_words(@big_game.game_datetime) %> ago 
+							  <% end %> 
+							  &middot; get in: enter gameroom<br /><span style="font-size:0.9em;"><strong>(no. seriously. get in the gameroom.)</strong></span>
+							</div>
+						</a>
+						
+						<% end %>
+						
+						<!-- {section header} -->
+						<div class="hfa_left_sectionheader">ON NOW</div>
+						
+						<!-- {hfa_left_box} -->
+						
+						<% unless @currentgames.empty? %>
+						
+  						<% @currentgames.each do |game| %>
+    						<a href="gameroom/<%= game.id %>" class="hfa_left_box">
+    							<div class="hfa_left_box_title"><%= game.name %> <span style="color:#999"><%= game.league.upcase %></span></div>
+    							<div class="hfa_left_box_subti">started &middot; enter gameroom</div>
+    						</a>
+  						<% end %>
+  						
+  					<% else %>
+  						
+  						<a href="#" class="hfa_left_box">
+  							<div class="hfa_left_box_title">No Current Games</div>
+  						</a>
+												
+						<% end %>
+						
+						<!-- {section header} -->
+						<div class="hfa_left_sectionheader">UPCOMING GAMES</div>
+						
+						<!-- {hfa_left_box} -->
+						
+						<% unless @upcominggames.empty? %>
+						
+  						<% @upcominggames.each do |game| %>
+						
+    						<a href="gameroom/<%= game.id %>" class="hfa_left_box">
+    							<div class="hfa_left_box_title"><%= game.name %> <span style="color:#999"><%= game.league.upcase %></span></div>
+    							<div class="hfa_left_box_subti">starting in <%= time_ago_in_words(game.game_datetime) %> &middot; enter gameroom</div>
+    						</a>
+  						
+  						<% end %>
+  						
+  					<% else %>
+
+  						<a href="#" class="hfa_left_box">
+  							<div class="hfa_left_box_title">No Upcoming Games</div>
+  						</a>
+
+						<% end %>
+
+					</div>
+
+				</td>
+				<td class="pad_fix" width="60%" id="hfa_right">
+					<div id="hfa_right_in">
+						<!-- {hfa_right_box} -->
+						
+						<div id="public_timeline" class="hfa_right_box">
+						  <%= render :partial => "updates" %>
+						</div>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+</div>
+
+<script type="text/javascript">
+$(function(){
+	updateTicker();
+	setInterval("updateTicker()", 60000);
+});
+</script>

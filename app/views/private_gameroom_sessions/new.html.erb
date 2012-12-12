@@ -1,0 +1,14 @@
+<div class="constraint" style="padding-left:20px;">
+	<h2>Private Gameroom Login</h2>	
+	 <% form_for @private_gameroom_session do |form| %>  
+		<%= form.error_messages %>
+		
+		<%= form.text_field :login, :class => "login_field" %>
+
+		<%= form.password_field :password, :class => "login_field" %>
+		<strong><%= form.label :password, "password" %></strong><br />
+		
+		<%= form.hidden_field :gameroom_key, :value => @gameroom.gameroom_key %>
+		<%= form.submit "Submit", :class => "common_button" %>  
+	<% end %>
+</div>

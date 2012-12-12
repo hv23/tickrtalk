@@ -1,0 +1,99 @@
+<div class="constraint" style="padding-left:25px;padding-top:20px;">
+	<!--<div class="pagetitle"><%=  h @user.username %>'s profile</div>-->
+	<h1><%= h @user.username %>'s profile</h1>
+	
+	<table id="view_profile_table">
+		<tr>
+			<td width="50%" valign="top" style="vertical-align:top;">
+				<div class="panetitle">Updates</div>
+				
+				<% unless @updates.empty? %>
+				
+  				<div id="user_updates">
+            <%= render :partial => "updates" %>
+  				</div>
+								
+				<% end %>
+				
+			</td>
+			<td width="50%" valign="top" style="vertical-align:top;">
+				<div class="panetitle">Profile</div>
+				<table width="100%" style="padding:5px;">
+					<tr>
+						<td width="100%" valign="top" style="vertical-align:top;">
+							<div><strong style="font-size:2em;"><%= @user.username %></strong></div>
+							<% unless @user.bio.blank? %>
+								<div><%= h @user.bio %></div>
+							<% end %>
+						</td>
+						<td width="40" valign="top" style="vertical-align:top;">
+							<% if @user.avatar_file_name.blank? %>
+								<img src="/images/noavatar70.gif" />
+							<% else %>
+								<%= image_tag @user.avatar.url(:mediumthumb) %>
+							<% end %>
+							<% if current_user %>
+							<% if current_user.id != @user.id %>
+							<div style="margin-top:5px;margin-bottom:15px;">
+								<%= link_to "#{@followingtext}", {:action => "togglefollow", :controller => "users", :id => @user.id, :follow_status => @followingtext}, :class => "get followbutton", :id => "follow" %>
+								</div>
+							<% end %>
+							<% end %>
+						</td>
+					</tr>
+				</table>
+				
+				<div style="height:20px;"></div>
+				
+				<table width="100%" class="padfix">
+					<tr>
+						<td width="50%" class="padfix">
+							<div class="panetitle">Followers</div>
+								<table width="100%">
+									<% @followers.each do |follower| %>
+										<tr>
+											<% thisuser = User.find(follower.follower_id) %>
+											<td width="25" style="margin:0;">
+												<a href="/users/<%= h thisuser.username %>">
+												<% if thisuser.avatar_file_name.blank? %>
+												<img src="/images/noavatar25.gif" />
+												<% else %>
+												<%= image_tag thisuser.avatar.url(:small) %>
+												<% end %>
+												</a>
+											</td>
+											<td width="100%" style="margin:0;">
+												<a href="/users/<%= thisuser.username %>" style="text-decoration:none;"><%= thisuser.username %></a>
+											</td>
+										</tr>
+									<% end %>
+								</table>
+						</td>
+						<td width="50%" class="padfix">
+							<div class="panetitle">Following</div>
+							<table width="100%">
+								<% @following.each do |following| %>
+									<tr>
+										<% thisuser = User.find(following.followed_id) %>
+										<td width="25" style="margin:0;">
+											<a href="/users/<%= h thisuser.username %>">
+											<% if thisuser.avatar_file_name.blank? %>
+											<img src="/images/noavatar25.gif" />
+											<% else %>
+											<%= image_tag thisuser.avatar.url(:small) %>
+											<% end %>
+											</a>
+										</td>
+										<td width="100%" style="margin:0;">
+											<a href="/users/<%= thisuser.username %>" style="text-decoration:none;"><%= thisuser.username %></a>
+										</td>
+									</tr>
+								<% end %>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+</div>

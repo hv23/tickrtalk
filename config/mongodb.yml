@@ -1,0 +1,14 @@
+development:
+  adapter: mongodb
+  database: tickrtalk-development
+  host: localhost
+ 
+test:
+  adapter: mongodb
+  database: tickrtalk-test
+  host: localhost
+ 
+production:
+  adapter: mongodb
+  database: tickrtalk-production
+  host: localhost

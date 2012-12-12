@@ -1,0 +1,39 @@
+<script type="text/javascript">
+
+  twttr.anywhere(function (T) {
+    T.hovercards();
+  });
+
+</script>
+
+<div class="streamview">
+	<div style="font-size:1.3em;">
+	  <% if streamview.source == 1 %>
+		  <%= linkup_twitter_mentions(auto_link((h streamview.content), :all, :target => "_blank")) %>
+		<% else %>
+	    <%= linkup_mentions(auto_link((h streamview.content), :all, :target => "_blank")) %>
+	  <% end %>
+	</div>
+	
+	<div style="color:#777777;">
+		<strong>
+			<% if !streamview.twitter_username.nil? && streamview.source == 1 %>
+				<%= link_to streamview.twitter_username, "http://www.twitter.com/#{h streamview.twitter_username}", :class => "twitter-anywhere-user", :target => "_blank", :style => "text-decoration:none;color:#555555;" %>
+				<span><%= link_to "via Twitter", streamview.linkto.to_s, :target => "_blank", :style => "font-size:0.8em; color:#555555; text-decoration:none; font-weight:normal" %></span>
+			<% else %>
+				<a style="text-decoration:none;color:#555555;" href="/users/<%= streamview.user.username %>">
+				<%= streamview.user.username %>
+				</a>
+			<% end %>
+		</strong> &ndash; 
+		
+		<% unless streamview.game.nil? %>
+			<a style="text-decoration:none;color:#555555;" href="/gameroom/<%= streamview.game.id %>">
+				<%= streamview.game.name %>
+			</a> &ndash; 
+		<% end %>
+		
+			<a href="/update/<%= streamview.id %>" style="color:#555555;text-decoration:none;">
+			<%= time_ago_in_words(streamview.date_created) %> ago</a>
+	</div>
+</div>

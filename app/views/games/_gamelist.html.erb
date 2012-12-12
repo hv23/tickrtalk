@@ -1,0 +1,27 @@
+<div class="dotted_under">
+  <div style="font-size:1.8em;">
+  	<strong><%= h gamelist.name %></strong>
+  	<% if @dontshowsport.nil? %>
+    	<% if gamelist.league == "soccer" %>
+    	  <span style="color:#666666;"><%= h gamelist.openfooty_league.titleize %></span>
+   		<% else %>
+    		<span style="color:#666666;"><%= h gamelist.league.upcase %></span>
+    	<% end %>	
+  	<% end %>
+  </div>
+
+  <div class="game">
+  	<%= gamelist.date.strftime("%A, %b %d") %> at <%= gamelist.game_datetime.strftime("%I:%M %p %Z") %> &ndash; 
+
+  	<% if gamelist.game_datetime > Time.now %>starting in<% else %>started<% end %> 
+  		<%= distance_of_time_in_words(gamelist.game_datetime,Time.now) %> 
+  	<% if gamelist.game_datetime < Time.now %>ago<% end %> &ndash; 
+  	<a href="/gameroom/<%= gamelist.id %>" style="color:#177200;padding-left:2px;padding-right:2px;border-bottom:1px solid #177200;text-decoration:none;">	
+  		<% if gamelist.status.nil? %>	
+  			<strong>Enter Gameroom</strong>
+  		<% else %>
+  			Pregame Lobby
+  		<% end %>
+  	</a>
+  </div>
+</div>

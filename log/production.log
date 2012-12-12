@@ -1,0 +1,97 @@
+
+
+Processing WelcomeController#index (for 127.0.0.1 at 2010-03-21 22:02:22) [GET]
+  Parameters: {"action"=>"index", "controller"=>"welcome"}
+Rendering template within layouts/welcome
+Rendering welcome/index
+Completed in 477ms (View: 25, DB: 435) | 200 OK [http://localhost/]
+
+
+Processing WelcomeController#ticker (for 127.0.0.1 at 2010-03-21 22:02:23) [GET]
+  Parameters: {"action"=>"ticker", "controller"=>"welcome", "place"=>"holder"}
+Rendering welcome/ticker
+Completed in 238ms (View: 7, DB: 229) | 200 OK [http://localhost/welcome/ticker?place=holder]
+
+
+Processing GameroomController#index (for 127.0.0.1 at 2010-03-21 22:02:28) [GET]
+  Parameters: {"action"=>"index", "id"=>"4223", "controller"=>"gameroom"}
+Rendering template within layouts/gameroom
+Rendering gameroom/index
+Completed in 1295ms (View: 33, DB: 1258) | 200 OK [http://127.0.0.1/gameroom/4223]
+
+
+Processing GameroomController#index (for 127.0.0.1 at 2010-03-21 22:02:30) [GET]
+  Parameters: {"action"=>"index", "id"=>"4223", "controller"=>"gameroom"}
+Rendering template within layouts/gameroom
+Rendering gameroom/index
+Completed in 463ms (View: 17, DB: 445) | 200 OK [http://127.0.0.1/gameroom/4223]
+
+
+Processing GameroomController#index (for 127.0.0.1 at 2010-03-21 22:02:30) [GET]
+  Parameters: {"action"=>"index", "id"=>"4223", "controller"=>"gameroom"}
+Rendering template within layouts/gameroom
+Rendering gameroom/index
+Completed in 464ms (View: 17, DB: 445) | 200 OK [http://127.0.0.1/gameroom/4223]
+
+
+Processing GameroomController#index (for 127.0.0.1 at 2010-03-21 22:03:35) [GET]
+  Parameters: {"action"=>"index", "id"=>"4223", "controller"=>"gameroom"}
+Rendering template within layouts/gameroom
+Rendering gameroom/index
+Completed in 788ms (View: 121, DB: 729) | 200 OK [http://127.0.0.1/gameroom/4223]
+
+
+Processing GameroomController#index (for 127.0.0.1 at 2010-03-21 22:03:36) [GET]
+  Parameters: {"action"=>"index", "id"=>"4223", "controller"=>"gameroom"}
+Rendering template within layouts/gameroom
+Rendering gameroom/index
+Completed in 456ms (View: 18, DB: 436) | 200 OK [http://127.0.0.1/gameroom/4223]
+
+
+Processing GameroomController#index (for 127.0.0.1 at 2010-03-21 22:03:36) [GET]
+  Parameters: {"action"=>"index", "id"=>"4223", "controller"=>"gameroom"}
+Rendering template within layouts/gameroom
+Rendering gameroom/index
+Completed in 459ms (View: 17, DB: 440) | 200 OK [http://127.0.0.1/gameroom/4223]
+
+
+Processing GameroomController#index (for 127.0.0.1 at 2010-03-21 22:05:34) [GET]
+  Parameters: {"action"=>"index", "id"=>"4223", "controller"=>"gameroom"}
+Rendering template within layouts/gameroom
+Rendering gameroom/index
+Completed in 1462ms (View: 120, DB: 1405) | 200 OK [http://127.0.0.1/gameroom/4223]
+
+
+Processing GameroomController#index (for 127.0.0.1 at 2010-03-21 22:05:35) [GET]
+  Parameters: {"action"=>"index", "id"=>"4223", "controller"=>"gameroom"}
+Rendering template within layouts/gameroom
+Rendering gameroom/index
+Completed in 466ms (View: 17, DB: 447) | 200 OK [http://127.0.0.1/gameroom/4223]
+
+
+Processing GameroomController#index (for 127.0.0.1 at 2010-03-21 22:05:36) [GET]
+  Parameters: {"action"=>"index", "id"=>"4223", "controller"=>"gameroom"}
+Rendering template within layouts/gameroom
+Rendering gameroom/index
+Completed in 467ms (View: 17, DB: 447) | 200 OK [http://127.0.0.1/gameroom/4223]
+
+
+Processing WelcomeController#index (for 127.0.0.1 at 2010-03-21 22:07:09) [GET]
+  Parameters: {"action"=>"index", "controller"=>"welcome"}
+Rendering template within layouts/welcome
+Rendering welcome/index
+Completed in 1386ms (View: 83, DB: 1576) | 200 OK [http://127.0.0.1/]
+
+
+Processing WelcomeController#index (for 127.0.0.1 at 2010-03-21 22:07:11) [GET]
+  Parameters: {"action"=>"index", "controller"=>"welcome"}
+Rendering template within layouts/welcome
+Rendering welcome/index
+Completed in 943ms (View: 14, DB: 926) | 200 OK [http://127.0.0.1/]
+
+
+Processing WelcomeController#index (for 127.0.0.1 at 2010-03-21 22:07:12) [GET]
+  Parameters: {"action"=>"index", "controller"=>"welcome"}
+Rendering template within layouts/welcome
+Rendering welcome/index
+Completed in 961ms (View: 14, DB: 944) | 200 OK [http://127.0.0.1/]

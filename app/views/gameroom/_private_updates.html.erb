@@ -1,0 +1,43 @@
+<% @updates.each do |update|%>
+
+	<% if update.content.include?("@#{current_user.username}") %>
+		<div class="updateitem" style="background: #e9efe3 url('/images/reply_updatebg.gif') center bottom repeat-x;">
+	<% else %>
+		<div class="updateitem">
+	<% end %>
+		  	<table width="100%" style="padding:0;margin:0;overflow:hidden;">
+		  		<tr>
+		  			<td width="40"><div style="width:48px;height:48px;">
+	  					<% user = User.find(update.user_id) %>
+	  					<% if update.user_id != 0 %>
+	  						<% if update.user.avatar_file_name.blank? %>
+	  						<img src="/images/noavatar48.gif" />
+	  						<% else %>
+	  						<%= image_tag update.user.avatar.url(:thumb) %>
+	  						<% end %>
+	  					<% end %>
+		  			</div></td>
+		  			<td style="padding-left:5px;font-size:1.1em;">
+		  				<div><strong><a href="/users/<%= h user.username %>" target="_blank" style="color:#000000;text-decoration:none;"><%= h user.username %></a></strong> <%= linkup_mentions(auto_link(h(update.content))) %></div><div></div>
+		  				<div style="font-size:0.8em;color:#555555;"><a href="/private_updates/<%= update.id %>?gameroom_key=<%= update.private_gameroom.gameroom_key %>&facebox=true" rel="facebox" style="color:#555555;text-decoration:none;"><span id="update-<%= update.id %>" class="timeago" title="<%= update.created_at %>"><%= time_ago_in_words(update.created_at) %> ago</span></a>		
+		
+							<% if update.in_reply_to_update_id && update.in_reply_to_user %>
+								<%= link_to "in reply to #{h update.in_reply_to_user}", "/private_updates/#{h update.in_reply_to_update_id}?gameroom_key=#{update.private_gameroom.gameroom_key}&facebox=true", :class => "in_reply_to", :rel => "facebox" %>
+							<% end %>
+					
+							<%= link_to "Reply", "#", :class => "update_content_reply_to update_reply_to", :rel => h("#{update.user.username}:#{update.id}"), :title => "Reply to #{h update.user.username}", :id => "in_reply_to_#{update.id}" %>
+						
+						</div>
+					
+		  				<script type="text/javascript">
+		  				jQuery.timeago(jQuery("#update-<%= update.id %>"));
+		  				</script>
+		  			</td>
+		  		</tr>
+		  	</table>
+
+		</div>
+				
+<% end %>
+
+<%= will_paginate(@updates, :more => true) %>

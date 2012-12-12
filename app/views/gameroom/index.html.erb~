@@ -1,0 +1,197 @@
+<div style="height:100%;max-height:100%;background-color:#FFFFFF;">
+	<table style="height:100%;" class="clearspace">
+		<tr style="height:107px;" class="clearspace">
+			<td style="height:107px;" class="clearspace">
+				<div id="grheader">
+					<div id="grheadertext"><%= link_to @game.name, "/gameroom/#{@game.id}", :style => "color:white; text-decoration:none;" %></div>
+					</div>
+			</td>
+		</tr>
+		<tr style="height:44px;" class="clearspace">
+			<td style="height:44px;" class="clearspace">
+				<div id="underheader"><div style="float:right;"><img src="/images/gameroom-underheaderlive.gif" /></div><div style="float:left;"><a href="/"><img src="/images/gameroom-underheaderlogo.gif" /></a></div><div style="clear:both;"></div></div>
+			</td>
+		</tr>
+		<tr style="height:100%;" class="clearspace">
+			<td style="height:100%;" class="clearspace">
+				<table width="100%" style="height:100%;" class="clearspace">
+					<tr>
+						<td width="170" valign="top" style="vertical-align:top;" class="clearspace">
+						
+							<div style="width:170px;">
+								<div class="panetitle"><% if current_user %>Logged In<% else %>Not logged in <% end %></div>
+								<div class="pane">
+									<% if current_user %>
+									Logged in as <strong><%= current_user.username %></strong><br />
+										<% if current_user && facebook_session %>
+											<%= fb_logout_link("logout", logout_path)%>
+										<% else %>
+											<%= link_to "logout", logout_path %>
+										<% end %>									
+									
+									<% else %>
+									
+									<strong>Login to TickrTalk</strong>
+										<% store_location %>
+										
+										<% form_for :user_session, :url => {:controller => "user_sessions", :action => "create"} do |form| %>
+											<label class="user_label">username:</label>
+											<%= form.text_field :username, :size => 20 %>
+											<label class="user_label">password:</label>
+											<%= form.password_field :password, :size => 20 %> 
+											
+											<%= form.submit "Login", :class => "user_button" %>
+										<% end %>
+									<br />
+  									<% @gameroom = "yes" %>
+  									<strong>Sign Up for TickrTalk!</strong>
+										<% form_for :user, :url => {:controller => "users", :action => "create"} do |form| %>
+											<label class="user_label">username:</label>
+											<%= form.text_field :username, :size => 20 %>
+											
+											<label class="user_label">password:</label>
+											<%= form.password_field :password, :size => 20%> 
+											
+											<label class="user_label">password confirmation:</label>
+											<%= form.password_field :password_confirmation, :size => 20 %> 
+											
+											<label class="user_label">email (no spam):</label>
+											<%= form.text_field :email, :size => 20 %> 
+											
+											<%= form.submit "Signup!", :class => "user_button" %>
+										<% end %>
+									<% end %>
+								</div>
+								<div class="panetitle">Game Details</div>
+								<div class="pane">
+									<strong>Game Start:</strong><br />
+									<%= @game.date.strftime("%A, %b %d") %><br /><%= @game.time.in_time_zone.strftime("%I:%M %p %Z") %>
+									<br /><br />
+									<strong>Teams:</strong><br />
+									<a href="/teams/<%= Team.find_by_resource(@game.home_team).id %>"><%= h Team.find_by_resource(@game.home_team).team_name %></a> vs. <a href="/teams/<%= Team.find_by_resource(@game.away_team).id %>"><%= h Team.find_by_resource(@game.away_team).team_name %></a>
+								</div>
+							</div>
+						</td>
+						<td width="90%" valign="top" style="vertical-align:top;padding-top:0;">
+							
+							<div style="height:100%;background-color:#7c0000;">
+							
+								<table width="100%" style="height:100%;" class="clearspace">
+									<tr>
+										<td height="32" class="clearspace">
+											<div style="float:right;padding:8px;color:#FFFFFF;">
+												
+												<% if current_user %>
+													<%= link_to "all", {:action => "all_updates", :id => @game.id}, :class => "remote", :id => "all_updates_link", :style => "color:#FFFFFF;font-size:0.9em;text-decoration:none;", :title => "all" %> |
+													<%= link_to "replies", {:action => "replies", :id => @game.id}, :class => "remote", :id => "replies_link", :style => "color:#FFFFFF;font-size:0.9em;text-decoration:none;", :title => "replies" %> |
+													<%= link_to "following", {:action => "following", :id => @game.id}, :class => "remote", :id => "following_link", :style => "color:#FFFFFF;font-size:0.9em;text-decoration:none;", :title => "following" %> |
+													<%= link_to "tickrtalk only", {:action => "tickrtalk_only", :id => @game.id}, :class => "remote", :id => "tickrtalk_only_link", :style => "color:#FFFFFF;font-size:0.9em;text-decoration:none;", :title => "tickrtalk_only" %> |
+													<%= link_to "twitter only", {:action => "twitter_only", :id => @game.id}, :class => "remote", :id => "twitter_only_link", :style => "color:#FFFFFF;font-size:0.9em;text-decoration:none;", :title => "twitter_only" %>
+												<% end %>
+																								
+												<% if current_user && current_user.authorized? %>
+													<% if session[:send_to_twitter] %>													
+														<div>
+															send to twitter: <%= link_to "off", {:action => "send_to_twitter", :id => @game.id}, :class => "get", :id => "send_to_twitter", :style => "color:#FFFFFF;font-size:0.9em;text-decoration:underline;" %>
+														</div>
+													<% else %>
+														<div>
+															send to twitter: <%= link_to "on", {:action => "send_to_twitter", :id => @game.id}, :class => "get", :id => "send_to_twitter", :style => "color:#FFFFFF;font-size:0.9em;text-decoration:underline;" %>
+														</div>
+													<% end %>
+												<% end %>
+												
+												<% if current_user && facebook_session && status_updates_allowed? && session[:send_to_facebook] %>
+												
+													<div>
+														send to facebook: <%= link_to "off", {:action => "send_to_facebook", :id => @game.id}, :class => "get", :id => "send_to_facebook", :style => "color:#FFFFFF;font-size:0.9em;text-decoration:underline;" %>
+													</div>
+												<% elsif current_user && facebook_session && status_updates_allowed? && session[:send_to_facebook].nil? %>
+													<div>
+														send to facebook: <%= link_to "on", {:action => "send_to_facebook", :id => @game.id}, :class => "get", :id => "send_to_facebook", :style => "color:#FFFFFF;font-size:0.9em;text-decoration:underline;" %>
+													</div>
+													
+												<% elsif current_user && facebook_session && !status_updates_allowed? %>
+													<div>
+														Facebook status permissions are <%= link_to "off", account_url, :style => "color:#FFFFFF;font-size:0.9em;text-decoration:underline;" %>
+													</div>
+												<% end %>
+										
+													
+											</div>
+											<div class="panetitle">Updates</div>
+										</td>
+									</tr>
+									<tr>
+										<td height="100%" class="clearspace">
+											<div id="updates" style="height:100%;">
+												<div style="padding:0px;">
+
+													<div id="updatespane" class="remote_output">																																									
+                            							<%= render :partial => "updates" %>
+													</div>
+
+												</div>
+											</div>
+											
+										</td>
+									</tr>
+									<tr>
+										<td height="67" class="clearspace">
+											<div class="updatearea">																
+												<div style="padding:5px;">
+													<table style="height:100%; width:100%;" class="clearspace">
+														<tr class="clearspace">
+
+                            							<% if current_user %>
+															<td width="54" class="clearspace" style="padding-right:10px;">
+																<img src="/images/gameroom-updatetext.gif" />
+															</td>
+															
+															<td width="90%" class="clearspace">
+																<% form_for :update, @update, :html => {:id => "update_form"}, :url => { :controller => "update", :action => :add_line, :id => @game.id } do |f| %>
+                            		  							<%= f.text_area :content, :rows => 70, :class => 'updatetext' %>
+                            		  							<div id="send_update_button">
+																	<%= f.submit "Send", :class => "update_button", :id => "update_submit_button" %>																	
+																</div>
+                            	  								<% end %>
+								
+                              								</td>
+
+                              								<% else %> 
+
+															<td width="100%" class="clearspace" style="font-size:1.3em;color:#FFF;padding:5px;">
+                                 								<strong>Sign in on the left to send updates!</strong>
+                              								</td>
+                              								<% end %>
+
+														</tr>
+													</table>
+												</div>
+											</div>
+										</td>
+									</tr>
+								</table>
+								
+							</div>
+							
+						</td>
+						<td width="170" valign="top" style="vertical-align:top;" class="clearspace">
+							<div style="width:170px;">
+								<strong>Create a private gameroom <%= link_to "here", new_private_gameroom_url(:game_id => @game.id) %></strong>
+								
+								<% unless @game.home_score.nil? %>
+								<strong>Score:</strong>
+								<br />														
+									<%= Team.find_by_resource(@game.home_team).team %> - <strong><%= @game.home_score %></strong>
+									<br />
+									<%= Team.find_by_resource(@game.away_team).team %> - <strong><%= @game.away_score %></strong>
+								<% end %>
+							</div>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+</div>

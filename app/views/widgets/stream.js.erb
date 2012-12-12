@@ -1,0 +1,14 @@
+var txt = ''
+
+txt += "<div id='stream_widget'>";
+txt += "<h2>Updates</h2>";
+txt += "<ul>";
+<% @recent_updates.each do |update| %>
+txt += "<li>";
+txt += "<%= update.content %>";
+txt += "</li>"
+<% end %>
+txt += "</ul>"
+txt += "</div>"
+
+document.write(txt);

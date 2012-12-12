@@ -1,0 +1,70 @@
+osu:
+  id: 1
+  sport_id: 2
+  team_name: "Oklahoma St Cowboys"
+  team: "Oklahoma St"
+  mascot: "Cowboys"
+  league: "ncaaf"
+  resource: "team://ncaa_football/oklahoma_st_cowboys"
+  resource_path: "/ncaa_football/oklahoma_st_cowboys"
+
+chargers:
+  id: 2
+  sport_id: 1
+  team_name: "San Diego Chargers"
+  team: "San Diego"
+  mascot: "Chargers"
+  league: "nfl"
+  resource: "team://nfl/sd_chargers"
+  resource_path: "/nfl/sd_chargers"
+  
+georgia:
+  id: 3
+  sport_id: 2
+  team_name: "Georgia Bulldogs"
+  team: "Georgia"
+  mascot: "Bulldogs"
+  league: "ncaaf"
+  resource: "team://ncaa_football/georgia_bulldogs"
+  resource_path: "/ncaa_football/georgia_bulls"
+  
+
+colorado:
+  id: 4
+  sport_id: 2
+  team_name: "Colorado Buffaloes"
+  team: "Colorado"
+  mascot: "Buffaloes"
+  league: "ncaaf"
+  resource: "team://ncaa_football/colorado_buffaloes"
+  resource_path: "/ncaa_football/colorado_buffaloes"
+  
+broncos:
+  id: 5
+  sport_id: 1
+  team_name: "Denver Broncos"
+  team: "Denver"
+  mascot: "Broncos"
+  league: "nfl"
+  resource: "team://nfl/denver_broncos"
+  resource_path: "/nfl/denver_broncos"
+  
+boston:
+  id: 6
+  sport_id: 3
+  team_name: "Boston Red Sox"
+  team: "Boston"
+  mascot: "Red Sox"
+  league: "mlb"
+  resource: "team://mlb/boston_red_sox"
+  resource_path: "/mlb/boston_red_sox"
+  
+atlanta:
+  id: 7
+  sport_id: 3
+  team_name: "Atlanta Braves"
+  team: "Atlanta"
+  mascot: "Braves"
+  league: "mlb"
+  resource: "team://mlb/atlanta_braves"
+  resource_path: "/mlb/atlanta_braves"

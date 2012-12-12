@@ -1,0 +1,24 @@
+<% javascript_tag do -%> 
+	$(function() {
+		$('a.update_content_reply_to').click(function() {
+		  window.scrollTo(0, 0);
+		  var pieces = $(this).attr('rel').split(':');
+		  var screen_name = pieces[0];
+		  var id = pieces[1];
+		  $('#update_content').focus().val('@' + screen_name + ' ');
+		  $('#update_in_reply_to_update_id').val(id);
+		  $('#update_in_reply_to_user').val(screen_name);
+		  return false;
+		});
+	});
+
+	$("#updatespane").fadeIn("fast");
+	$('#updates').scrollTop(0);
+	
+	stomp.unsubscribe('/topic/private_gameroom_<%= @gameroom.gameroom_key %>_<%= @current_user.username %>');
+	stomp.subscribe('/topic/private_gameroom_<%= @gameroom.gameroom_key %>');
+<% end -%>
+
+<%= render :partial => "updates" %>				
+
+			

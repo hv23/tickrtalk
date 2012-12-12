@@ -1,0 +1,10 @@
+
+<% if params[:page] == 1 || params[:page].nil? %>
+	$('#updatespane').empty();
+<% end %>
+
+<% if params[:page] && params[:page].to_i > 1 %>
+	$('.pagination').remove();
+<% end %>
+
+$('#updatespane').append("<%= escape_javascript(render(:partial => 'updates')) %>");

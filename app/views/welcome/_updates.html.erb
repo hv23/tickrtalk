@@ -1,0 +1,31 @@
+<% @recent_updates.each do |update| %>						
+  
+  <% if update.source == 0 %>
+  
+		<div class="hfa_right_box_content timeline_dotted"><strong><%= link_to update.user.username, "users/#{update.user.username}" %></strong> <%= update.content %></div>
+		<div class="hfa_right_box_meta"><%= link_to "#{time_ago_in_words(update.date_created)} ago", "update/#{update.id}", :target => "_blank", :style => "color:#999;" %><a href="/gameroom/<%= update.game.id %>"> <%= update.game.name %></a></div>
+		
+	<% elsif update.source == 1 %>
+	
+		<div class="hfa_right_box_content timeline_dotted">
+		  <strong><%= link_to update.twitter_username, "http://www.twitter.com/#{h update.twitter_username}", :class => "twitter-anywhere-user", :target => "_blank" %></strong>
+		  <%= linkup_twitter_mentions(auto_link(( h update.content), :all, :target => "_blank")) %>
+		</div>
+		<div class="hfa_right_box_meta"><%= time_ago_in_words(update.date_created) %> ago <a href="/gameroom/<%= update.game.id %>"><%= update.game.name %></a> <%= link_to "via Twitter", update.linkto.to_s, :target => "_blank" %></div>
+		
+	<% end %>
+	
+<% end %>
+
+<%= will_paginate(@recent_updates, :more => true) %>
+
+<% javascript_tag do -%>
+  $(function () {  
+      $('.pagination a').live("click", function () {  
+          $.get(this.href, null, null, 'script');  
+          return false;  
+      });  
+  });
+<% end -%>  
+
+  

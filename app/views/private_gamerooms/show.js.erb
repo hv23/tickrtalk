@@ -1,0 +1,3 @@
+$('#updatespane').prepend("<%= escape_javascript(render(:partial => 'checkin_content', :locals => {:checkin => @checkin})) %>");
+$('#updates').scrollTop(0); 
+$('#update_form')[0].reset();

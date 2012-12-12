@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+<meta name="google-site-verification" content="iIFRb8_SbbOis3iTUDb2VAWRMZ3RWNp3SLACmbS8GII" />
+
+<title>TickrTalk Gameroom | <% unless @game.name.nil? %> <%= @game.name %> <% end %> | <%=h @game.league.upcase %></title>
+
+<%= stylesheet_link_tag "screen", :media => "screen, project" %>
+<%= stylesheet_link_tag "print", :media => "print" %>
+<%= stylesheet_link_tag "gameroom", "update", "message_block", "facebox", :cache => "gameroom_css" %>
+
+<%= stylesheet_link_tag "/sifr/sIFR-screen", :media => "screen" %>
+<%= stylesheet_link_tag "/sifr/sIFR-print", :media => "print" %>
+
+<%= javascript_include_tag "jquery", "jquery.scrollto", "jquery.hint", "jquery.flash", "jquery.sifr", "application", "gameroom", "jquery.timeago", "pagination", "facebox", :cache => "gameroom_js" %>
+
+<% unless current_user %>
+  <% javascript_tag do -%>
+  	$(document).ready(function() {
+      $.facebox(<%= (render :partial => 'gameroom/signup_from_gameroom').to_json %>);
+      
+      var faceboxwidth = $('#facebox').width();
+      var faceboxheight = $('#facebox').height();
+      $("#gameroom_signup").css({'width': faceboxwidth-90});
+      $("#gameroom_signup").css({'height': faceboxheight-80});
+  	});
+  <% end -%>
+<% end %>
+
+<% javascript_tag do -%>
+	$(document).ready(function() {
+    $('#updates').css({'height':(($(window).height())-260)});
+	});
+<% end -%>
+
+<% javascript_tag do -%>
+	jQuery(document).ready(function() {
+		jQuery('a[rel*=facebox]').facebox();
+		 $.facebox.settings.opacity = 0.5;
+	}); 
+<% end -%>
+
+<% javascript_tag do -%>
+	$(document).ready(function() {
+	  $('#updates_flash').hide();
+	  $('#activity').hide();
+	});
+<% end -%>
+
+<%= orbited_javascript %>
+
+<% if current_user %>
+	<%= stomp_connect(["game_#{@game.id}_#{current_user.username}_replies_count", "game_#{@game.id}"], :js => :jquery) %>
+<% else %>
+	<%= stomp_connect("game_#{@game.id}", :js => :jquery) %>
+<% end %>
+
+<script src="http://platform.twitter.com/anywhere.js?id=EwXbWrCRINmbmQXAXsy96w&v=1" type="text/javascript"></script>
+
+<style type="text/css">
+html, body {
+	height:100%;
+}
+
+.hintblur {
+	color:#888888;
+}
+</style>
+
+<%= javascript_tag "var AUTH_TOKEN = #{form_authenticity_token.inspect};" if protect_against_forgery? %>
+
+<script type="text/javascript">
+gameid = '<%= @game.id %>'
+</script>
+
+<%= yield :head %> 
+
+</head>
+
+<body>
+	
+	<script type="text/javascript">
+
+	  twttr.anywhere(function (T) {
+	    T.hovercards();
+	  });
+
+	</script>
+	
+	<%= yield %>
+
+<%= render :partial => "layouts/gacode" %>
+
+</body>
+
+<script type="text/javascript">
+	$('#grheadertext').sifr({path: '/sifr/', font: 'gl', fontSize: "1.3em", hover: "#DDDDDD" });
+	// init hints
+	$(function(){ 
+		// initialize hints
+		$('input[title!=""]').hint('hintblur');
+		$('textarea[title!=""]').hint('hintblur');
+	});
+</script>
+
+</html>

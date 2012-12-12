@@ -1,0 +1,7 @@
+<% unless @contacts == "fail" %>
+	$('#contact_error').hide();
+	$('#contact_form').html("<%= escape_javascript(render(:partial => 'private_gamerooms/search_contacts')) %>")
+<% else %>
+	$('#contact_error').show();
+	$('#contact_error').html("Something is wrong with your login or password.  Please try again.")
+<% end %>

@@ -1,0 +1,86 @@
+<div class="constraint" style="padding-left:25px;padding-top:20px;">
+
+  <% if admin? %>
+    <p style="font-size:16px;"><strong>You are a TickrTalk administrator. The Admin page is <%= link_to "here", 'admin' %>.</strong></p>
+  <% end %>
+
+	<h1>Edit Settings</h1>
+	
+	<%= message_block :flash_types => [:error] %>
+	
+	<% form_for @user, :html => { :enctype => "multipart/form-data", :class => "login_settings_form" } do |u| %>
+
+		<table id="login_settings" class="padfix">
+			<tr>
+				<td width="50%" class="padfix">
+					<h3>General Settings</h3>
+					<%= u.text_field :username, :class => "account_field" %><br />
+					<label>username</label><br /><br />
+					<%= u.password_field :password, :autocomplete => "off", :value => "", :class => "account_field" %><br />
+					<label>password (enter a new password to change)</label><br /><br />
+					<%= u.password_field :password_confirmation, :autocomplete => "off", :value => "", :class => "account_field" %><br />
+					<label>password confirmation</label><br /><br />
+					<%= u.text_field :email, :class => "account_field" %><br />
+					<label>email address</label><br /><br />
+					<%= u.text_field :bio, :class => "account_field" %><br />
+					<label>about me (keep it short!)</label><br /><br />
+					<%= u.time_zone_select :time_zone, {}, {}, {:class => "account_selectfield"} %><br />
+					<label>time zone</label><br />
+				</td>
+				<td width="50%" class="padfix">
+					<h3>User Icon</h3>
+					<% unless current_user.avatar_file_name.blank? %>
+					<div><strong>Current Icon:</strong></div>
+					<div style="margin-bottom:10px;"><%= image_tag current_user.avatar.url(:mediumthumb) %></div>
+					<% end %>
+					<div><strong>Upload New Icon</strong></div>
+					    <%= u.file_field :avatar %>
+				</td>
+				
+			</tr>
+		</table>
+
+		<div id="login_settings_submit">
+			<%= u.submit "Save Changes", :class => "common_button" %>
+		</div>
+		<% end %>		
+		
+		<div id="social_login">
+			<h3>Connections</h3>
+			<% unless current_user.authorized? %>
+				<%- form_tag session_path do -%>
+					<p><%= image_submit_tag 'signin_twitter_default.png', :class => "welcome_twitter_button", :onmouseover => "this.src='/images/signin_twitter_hover.png'", :onmouseout => "this.src='/images/signin_twitter_press.png'" %></p>
+				<%- end -%>
+
+			<% else %>
+				<p>Your Twitter account is connected to your Tickrtalk account!</p>
+				<p>
+					Username: <%= link_to "#{@user.twitter_name}", "http://twitter.com/#{@user.twitter_name}" %> 
+					<span style="float:right;"><%= link_to 'logout of twitter', logout_twitter_path %></span>
+				</p>
+			<% end %>
+		
+			<% unless current_user.facebook_authorized? %>						
+				<%- form_tag facebook_session_path, :style => "display:inline;padding:0;margin:0;" do -%>
+				  <%= image_submit_tag 'signin_facebook_default.png', :class => "welcome_facebook_button", :onmouseover => "this.src='/images/signin_facebook_hover.png'", :onmouseout => "this.src='/images/signin_facebook_press.png'" %>
+				<% end -%>
+				
+				<% else %>
+				
+				<p>Your Facebook account is connected to your Tickrtalk account!</p>
+		
+				<p>
+					Username: <%= @user.facebook_name %>
+					<span style="float:right;"><%= link_to 'logout of facebook', logout_facebook_path %></span>
+				</p>
+			
+				<p>	
+					<% if current_user.facebook_authorized?  %>
+						Edit your <strong><%= link_to "Facebook Permissions", 'http://www.facebook.com/editapps.php?v=allowed', :target => "_blank" %></strong>
+					<% end %>
+				</p>
+			<% end %>
+				
+		</div>
+		
+</div>

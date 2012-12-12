@@ -1,0 +1,2 @@
+module PrivateUpdatesHelper
+end

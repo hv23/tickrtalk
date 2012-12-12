@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" xmlns:fb="http://www.facebook.com/2008/fbml">
+<head>
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+<meta name="google-site-verification" content="iIFRb8_SbbOis3iTUDb2VAWRMZ3RWNp3SLACmbS8GII" />
+
+<title>TickrTalk Private Gameroom | <% unless @game.nil? %> <%= @game.name %> | <%=h @game.league.upcase %> <% end %></title>
+
+<%= stylesheet_link_tag "screen", :media => "screen, project" %>
+<%= stylesheet_link_tag "print", :media => "print" %>
+<%= stylesheet_link_tag "gameroom", "update", "message_block", "facebox", :cache => "gameroom_css" %>
+
+<%= stylesheet_link_tag "/sifr/sIFR-screen", :media => "screen" %>
+<%= stylesheet_link_tag "/sifr/sIFR-print", :media => "print" %>
+
+<%= javascript_include_tag "jquery", "jquery.scrollto", "jquery.hint", "jquery.flash", "jquery.sifr", "application", "gameroom", "jquery.timeago", "pagination", "facebox", :cache => "gameroom_js" %>
+
+<% javascript_tag do -%>
+	jQuery(document).ready(function() {
+		jQuery('a[rel*=facebox]').facebox() 
+	})
+<% end -%>
+
+<% javascript_tag do -%>
+	$(document).ready(function() {
+	  $('#activity_fb').hide();
+	});
+<% end -%>
+
+<%= orbited_javascript %>
+<%= stomp_connect("private_gameroom_#{@gameroom.gameroom_key}", :js => :jquery) %>
+
+<style type="text/css">
+html, body {
+	height:100%;
+}
+
+.hintblur {
+	color:#666666;
+}
+</style>
+
+<%= javascript_tag "var AUTH_TOKEN = #{form_authenticity_token.inspect};" if protect_against_forgery? %>
+
+<script type="text/javascript">
+function resizeView() {
+	if (navigator.userAgent.indexOf("Firefox")!=-1) {
+		$(function() {
+			document.getElementById('updates').style.height = (window.innerHeight - 270) + 'px';
+		});
+	}
+}
+
+resizeView()
+</script>
+
+<script type="text/javascript">
+gameid = '<%= @game.id %>'
+</script>
+
+<%= yield :head %> 
+
+</head>
+
+<body onload="" onresize="resizeView()">
+
+	<%= yield %>
+	
+	<%= render :partial => "layouts/gacode" %>
+	
+</body>
+</html>

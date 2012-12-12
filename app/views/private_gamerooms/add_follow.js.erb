@@ -1,0 +1,9 @@
+var invitees = $('#invitees').val();
+
+if (invitees == "") {
+	$("#invitees").val($("#invitees").val() + "<%= @follows %>");
+	$("#follows").val("");
+} else {
+	$("#invitees").val($("#invitees").val() + ", <%= @follows %>");
+	$("#follows").val("");
+}

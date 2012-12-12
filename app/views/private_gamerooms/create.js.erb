@@ -1,0 +1,5 @@
+<% if @gameroom.valid? %>
+	$('#private_gameroom').html("<%= escape_javascript(render(:partial => 'private_gamerooms/view_private_gameroom')) %>"); 
+<% else %>
+	$('#private_gameroom').html("<%= escape_javascript(render(:partial => 'private_gamerooms/new_private_gameroom')) %>"); 
+<% end %>

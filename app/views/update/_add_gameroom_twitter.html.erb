@@ -1,0 +1,1 @@
+$('#updatespane').prepend($("<%= escape_javascript(render(:partial => 'update/gameroom_twitter_update', :game_id => @game_id, :game_name => @game_name, :user => @user, :content => @content, :linkto => @linkto, :date_created => @date_created, :image_url => @image_url, :update_id => @update_id)) %>").fadeIn('slow'));

@@ -1,0 +1,33 @@
+<div class="constraint games_content" style="padding-left:25px;margin-top:20px;">
+  
+  <div class="dotted_under" style="margin-bottom:10px;">
+		<h2 style="margin-bottom:10px;">List games by league</h2>
+		<% @leagues.each do |league| %>
+			<strong>
+			  <% if params[:league] == league.short %>
+			    <%= link_to league.short.upcase, games_path(:league => league.short), :style => "margin-right:20px;font-size:1.8em;color:#FFF", :class => "subnav_current" %>
+			  <% else %>
+			    <%= link_to league.short.upcase, games_path(:league => league.short), :style => "margin-right:20px;font-size:1.8em;color:#000;" %>
+			  <% end %>
+			</strong>
+		<% end %>
+	</div>
+  
+	<h2 style="margin-bottom:10px;">
+	  <% if params[:league] %>
+	    Current and Upcoming Games for <%= params[:league].upcase %>
+	  <% else %>
+	    Current and Upcoming Games
+	  <% end %>
+	</h2>
+	
+	<div class="digg_pagination" style="margin-bottom:10px;">
+		<%= will_paginate @games %>
+	</div>
+	
+	<%= render :partial => 'gamelist.html.erb', :collection => @games %>
+	
+	<div class="digg_pagination" style="margin-top:20px;">
+		<%= will_paginate @games, :inner_window => 2 %>
+	</div>
+</div>

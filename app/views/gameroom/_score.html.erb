@@ -1,0 +1,19 @@
+	
+	
+	<div id="gameroom_score" style="line-height:30px;">
+	  
+	  <% unless @game.league == "soccer" %>
+		  
+		  <%= image_tag("http://www.fanfeedr.com/img/teams/small/#{@game.home_team.gsub('team://'+@game.league+'/', "")}_25.png", :style => "vertical-align:middle;") %>
+		  <%= Team.first(:resource => @game.home_team).team %> - <strong><span id="home_score"><%= @game.home_score || "0" %></span></strong><br />
+		  
+		  <%= image_tag("http://www.fanfeedr.com/img/teams/small/#{@game.away_team.gsub('team://'+@game.league+'/', "")}_25.png", :style => "vertical-align:middle;") %>
+		  <%= Team.first(:resource => @game.away_team).team %> - <strong><span id="away_score"><%= @game.away_score || "0" %></span></strong>	
+      
+      <p><%= link_to "View the boxscore", "http://fanfeedr.com/#{@game.resource_text.gsub("event://", "")}", :style => "color:#FFF;font-size:0.8em;", :target => "_blank" %></p>
+		<% else %>
+		
+		  <%= @game.home_team %> - <strong><span id="home_score"><%= @game.home_score %></span></strong><br />	    
+	    <%= @game.away_team %> - <strong><span id="away_score"><%= @game.away_score %></span></strong>
+		<% end %>
+	</div>

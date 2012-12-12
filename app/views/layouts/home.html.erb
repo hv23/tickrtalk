@@ -1,0 +1,152 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+<meta name="google-site-verification" content="iIFRb8_SbbOis3iTUDb2VAWRMZ3RWNp3SLACmbS8GII" />
+
+<title>TickrTalk</title>
+
+<%= stylesheet_link_tag "screen", "message_block", "facebox", :cache => "main_css" %>
+<%= javascript_include_tag "jquery", "application", "facebox", :cache => "main_js" %>
+
+<script src="http://platform.twitter.com/anywhere.js?id=EwXbWrCRINmbmQXAXsy96w&v=1" type="text/javascript"></script>
+
+<%= javascript_tag "var AUTH_TOKEN = #{form_authenticity_token.inspect};" if protect_against_forgery? %>
+
+<% javascript_tag do -%>
+	jQuery(document).ready(function() {
+		jQuery('a[rel*=facebox]').facebox();
+		 $.facebox.settings.opacity = 0.5;
+	}); 
+<% end -%>
+
+</head>
+<body <% if params[:controller] = "welcome" and params[:action] = "index" %> onresize="resizeTickerView()"<% end%>>
+
+<div id="canvas">
+
+<div id="header">
+	<div id="topheader2">
+		<div class="constraint">
+			<div style="float:left;width:200px;"><a href="/"><img src="/images/header2_logo.gif" alt="TickerTalk" /></a></div>
+
+			<div style="float:right;width:760px;" id="topmenu2">
+				<div style="float:right; width:350px;" id="topmenu2_user">
+							<% unless current_user %>
+							<div style="float:right;display:block;text-align:right;">
+							  <% store_location %>						
+                <%= link_to "Join Now!", signup_path(:box => "true"), :rel => "facebox", :style => "font-size:20px;font-weight:bold;" %><br />
+                <span style="font-size:11px;">Already have an account? <strong><%= link_to "Login", login_path(:box => "true"), :rel => "facebox" %></strong>.</span>
+							</div>
+
+							<% else %>
+								<% if current_user.username != nil %>
+									<div style="text-align:right;">
+										<div>howdy, <strong style="padding-right:0;"><%= h current_user.username %></strong></div>
+										<div style="color:#d1a4a2;"><a href="/users/<%= current_user.username %>">My Profile</a> / <%= link_to "My Teams", myteams_path %> / <%= link_to "My Gamerooms", mygamerooms_path %> / <%= link_to "Settings", account_path %> / <%= link_to "Logout", logout_path %><!-- <% if current_user && !current_user.authorized? %>
+											<%- form_tag session_path, :style => "display:inline;padding:0;margin:0;float:right;" do -%>
+										    	<%= image_submit_tag 'signin_twitter_default.png', :class => "welcome_twitter_button", :onmouseover => "this.src='/images/signin_twitter_hover.png'", :onmouseout => "this.src='/images/signin_twitter_press.png'" %>
+										  	<%- end -%>
+										<% end %>
+
+										<div id="facebook_button" style="float:right;margin-right:10px;">
+											<% if current_user && !current_user.facebook_authorized? %>						
+				      					<%- form_tag facebook_session_path, :style => "display:inline;padding:0;margin:0;float:right;" do -%>
+				      					  <%= image_submit_tag 'signin_facebook_default.png', :class => "welcome_facebook_button", :onmouseover => "this.src='/images/signin_facebook_hover.png'", :onmouseout => "this.src='/images/signin_facebook_press.png'" %>
+				      					<% end -%>
+											<% end %>
+										</div>-->
+										</div>
+									</div>	
+								<% end %>
+							<% end %>
+				</div>
+				
+  				<% if current_page?(:controller => "games") %>
+  				  <a href="/"><img src="/images/header2_home-off.gif" /></a>
+  				  <a href="/games" class="current"><img src="/images/header2_games-on.gif" /></a>
+  				  <a href="/teams"><img src="/images/header2_teams-off.gif" /></a><div style="clear:both;">
+  				
+  				<% elsif current_page?(:controller => "teams") %>				
+  				  <a href="/"><img src="/images/header2_home-off.gif" /></a>
+  				  <a href="/games"><img src="/images/header2_games-off.gif" /></a>
+    				<a href="/teams" class="current"><img src="/images/header2_teams-on.gif" /></a><div style="clear:both;">
+    			<% else %>
+    			  <a href="/" class="current"><img src="/images/header2_home-on.gif" /></a>
+    			  <a href="/games"><img src="/images/header2_games-off.gif" /></a>
+  				  <a href="/teams"><img src="/images/header2_teams-off.gif" /></a><div style="clear:both;">
+  				<% end %>				
+				  
+  				</div>
+				</div>
+			<div style="clear:both;"></div>
+		</div>
+	</div>
+</div>
+<% unless session[:flash].nil? %>
+<div class="constraint">
+<div style="padding-top:20px;">
+<div class="notice">
+<%= session[:flash] %>	
+</div>
+</div>
+</div>
+<% session[:flash] = nil %>
+<% end %>
+
+<% unless flash[:notice].nil? %>
+<div class="constraint">
+<div style="padding-top:20px;">
+<div class="notice">
+<%= flash[:notice] %>	
+</div>
+</div>
+</div>
+<% end %>
+
+<% unless flash[:success].nil? %>
+<div class="constraint">
+<div style="padding-top:20px;">
+<div class="success">
+<%= flash[:success] %>
+</div>
+</div>
+</div>
+<% end %>
+
+<div class="content content_fix"">
+<%= yield %>
+</div>
+
+</div>
+
+<div id="footer">
+  <p>
+    &copy 2010
+    <span style="word-spacing:10px">
+      TickrTalk &middot;
+      
+      <%= link_to "About", "/about" %>
+      <%= link_to "Terms", "/terms" %>
+      <%= link_to "Privacy", "/privacy" %>
+      <%= link_to "Contact", "mailto:hello@tickrtalk.com" %>
+    </span>
+  </p>
+</div>
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-16789814-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</body>
+</html>

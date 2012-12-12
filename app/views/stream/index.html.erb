@@ -1,0 +1,10 @@
+<div class="constraint" style="padding-left:45px;padding-right:25px;">
+	<h1>Stream</h1>
+	<div id="following_stream">
+		<a class="streamselect<% if @follow.nil? %>on<% end %>" href="/stream">Everyone</a><a class="streamselect<% unless @follow.nil? %>on<% end %>" href="/stream/following">People I'm Following</a>
+	</div>
+	
+	<div id="streamwindow">
+		<%= render :partial => 'streamview', :collection => @updates %>
+	</div>
+</div>

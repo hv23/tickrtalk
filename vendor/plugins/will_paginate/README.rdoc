@@ -1,0 +1,122 @@
+= WillPaginate
+
+This is a fork of the famous classic {Will_paginate}[http://github.com/mislav/will_paginate/tree/master] .
+In this I have made minor changes to the plugin to give you a "more" pagination link (Twitter like pagination) with Ajax. This is a basic version of the plugin.
+
+  Post.paginate :page => 1, :order => 'created_at DESC'
+
+... and then render the page links with a single view helper? Well, now you
+can.
+  <%= will_paginate(@posts, :more => true) %>
+
+Some resources to get you started:
+
+* {Installation instructions}[http://github.com/mislav/will_paginate/wikis/installation]
+  on {the wiki}[http://github.com/mislav/will_paginate/wikis]
+* Your mind reels with questions? Join our
+  {Google group}[http://groups.google.com/group/will_paginate].
+* {How to report bugs}[http://github.com/mislav/will_paginate/wikis/report-bugs]
+
+
+== Example usage
+This is how a categories controller looks like:
+
+=== Controller
+  class CategoriesController < ApplicationController
+   def index
+    @categories = Category.paginate :page => params[:page] || 1, :per_page => 10
+    
+    respond_to do |format|
+      format.html
+      format.js {
+        render :update do |page|
+          page.insert_html :bottom, 'results', :partial => 'search_results'
+        end
+      }
+    end
+   end
+  end
+
+In the above I assume that I am having a results div in my view file and appending the results at the bottom of the few file
+with another "more" link to it
+
+=== index.html.erb
+
+  <div id="results">
+   <% for category in @categories %>
+     <%= category.id %> 
+     <%= category.title %>
+     <hr />
+   <% end -%>
+
+   <%= will_paginate(@categories, :more => true) %>
+
+  </div>
+
+== Note
+
+  If [\* :more => true *] is [\* NOT *] supplied in the options, then it will give you the classic view
+   of the pagination with page number and its links.
+
+===  _search_results.html.erb (And the partial which renders the results )
+
+  <% for category in @categories %>
+    <%= category.id %> 
+    <%= category.title %>
+    <hr />
+   <% end -%>
+
+  <%= will_paginate(@categories, :more => true) %>
+
+=== One last step adding of the Javascript in your applications.js
+
+  document.observe("dom:loaded", function() {
+  // the element in which we will observe all clicks and capture
+  // ones originating from pagination links
+  var container = $(document.body)
+
+  if (container) {
+    container.observe('click', function(e) {
+      var el = e.element()
+      if (el.match('.pagination a')) {
+        new Ajax.Request(el.href, { method: 'get' })
+        e.stop()
+        destroydivs()
+      }
+    })
+  }
+  })
+
+  function destroydivs(){
+	var DIVtoRemove = document.getElementById("categories_pagination");
+	DIVtoRemove.parentNode.removeChild(DIVtoRemove);	
+  }
+
+The above is to make an ajax request and delete the previous pagination div present
+
+The End.
+
+Hurray!! You are done. start giving some css touches to the more similar like in your css files
+
+=== Example Css
+  .pagination {
+    background: white;
+    border: 1px solid #BBBBBB;
+    border-color: #DDDDDD #AAAAAA #AAAAAA #DDDDDD;
+    text-align: center;
+    text-decoration: none;
+    background-image: url(http://s.twimg.com/a/1250809294/images/more.gif);
+    padding: 5px 5px 5px 5px;
+    font-size: 14px;
+   }
+
+
+Yeah, +paginate+ works just like +find+ -- it just doesn't fetch all the
+records.  Don't forget to tell it which page you want, or it will complain!
+Read more on WillPaginate::Finder::ClassMethods.
+
+== ToDo
+   Test Features and ?
+
+== Note
+  For reference about the will pagination and other related material please go to the Readme_old.txt file 

@@ -1,0 +1,6 @@
+one:
+  id: 1
+  user_id: <%= Fixtures.identify(:johnny) %>
+  private_gameroom_id: <%= Fixtures.identify(:one) %>
+  content: "Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?"
+  created_at: "2009-12-10 11:20:00"

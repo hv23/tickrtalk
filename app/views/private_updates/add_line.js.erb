@@ -1,0 +1,3 @@
+$('a[rel*=start]').click();
+$('#updatespane').prepend("<%= escape_javascript(render(:partial => 'update_content', :locals => {:update => @update})) %>");
+$('#updates').scrollTop(0);

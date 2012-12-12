@@ -1,0 +1,24 @@
+
+	<div class="src_twitter">
+
+  	<table width="100%" style="padding:0;margin:0;overflow:hidden;">
+  		<tr>
+  			<td width="40"><div style="width:48px;height:48px;">
+					<%= link_to image_tag("#{h @image_url}", :border=>0, :size => "48x48"), "http://twitter.com/#{h @user}", :target => "_blank" %>
+  			</div></td>
+  			<td style="padding-left:5px;font-size:1.1em;">
+
+  				<div><strong><%= link_to @user, "http://twitter.com/#{h @user}", :target => "_blank", :style => "color:#000000;text-decoration:none;", :class => "twitter-anywhere-user" %></strong> <%= auto_link(@content, :href_options => { :target => '_blank' }) %> <span style="font-size:0.8em;"><a href="<%= @linkto %>" target="_blank", style="color:#666666;border:none;">via Twitter</a></span></div>
+
+  				<div style="font-size:0.8em;color:#555555;">
+  				  <%= time_ago_in_words(@date_created) %> ago
+  				</di>
+
+				<script type="text/javascript">
+				jQuery.timeago(jQuery("#update-<%= @update_id %>"));
+				</script>
+  			</td>
+  		</tr>
+  	</table>
+
+	</div>

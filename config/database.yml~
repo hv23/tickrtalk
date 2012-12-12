@@ -1,0 +1,22 @@
+development:
+  adapter: mysql
+  database: tickrtalk_development
+  username: root
+  password: dixie
+  socket: /tmp/mysql.sock
+#  username: johnny
+#  password: phukhai
+#  socket: /var/lib/mysql/mysql.sock
+test:
+  adapter: mysql
+  database: tickrtalk_test
+  username: root
+  password: 
+  host: 127.0.0.1
+production:
+  adapter: mysql
+  database: tickrtalk_production
+  username: root
+  password: missinge
+  host: 207.192.69.147
+

@@ -1,0 +1,14 @@
+<% @games.each do |game| %>
+	<div style="margin-bottom:3px;">
+		<div>
+			<strong><a href="/gameroom/<%= game.id %>"><%= h game.name %></a></strong>
+		</div>
+		
+		<div>
+			<%= game.game_datetime.in_time_zone.strftime("%A, %b %d at %I:%M %p %Z") %> &ndash; 
+			<% if game.game_datetime > Time.now %>starting in<% else %>started<% end %> 
+			<%= distance_of_time_in_words(game.game_datetime,Time.now) %>
+			<% if game.game_datetime < Time.now %>ago<% end %>
+		</div>
+	</div>
+<% end %>

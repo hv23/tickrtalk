@@ -1,0 +1,13 @@
+<div class="constraint" style="padding-left:20px;">
+
+	<% unless flash[:notice].nil? %>
+		<div class="notice">
+			<%= flash[:notice] %>	
+		</div>
+	<% end %>
+
+	<div id="private_gameroom">
+		<%= render :partial => 'new_private_gameroom' %>
+	</div>
+		
+</div>

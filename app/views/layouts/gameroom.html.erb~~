@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" xmlns:fb="http://www.facebook.com/2008/fbml">
+<head>
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+<title>TickrTalk Gameroom | <% unless @game.name.nil? %> <%= @game.name %> <% end %> | <%=h @game.league.upcase %></title>
+
+<link rel="stylesheet" type="text/css" href="/stylesheets/screen.css" media="screen, projection" />
+<link rel="stylesheet" type="text/css" href="/stylesheets/print.css" media="print" />
+<link rel="stylesheet" type="text/css" href="/stylesheets/gameroom.css" />
+<%= stylesheet_link_tag 'message_block' %>
+
+<script type="text/javascript" src="/javascripts/jquery.js"></script>
+<script type="text/javascript" src="/javascripts/jquery.scrollto.js"></script>
+<script type="text/javascript" src="/javascripts/jquery.hint.js"></script>
+<script type="text/javascript" src="/javascripts/application.js"></script>
+<%= javascript_include_tag "jquery.history_remote" %>
+<script type="text/javascript" src="/javascripts/gameroom.js"></script>
+<script src="/javascripts/jquery.timeago.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="/sifr/sIFR-screen.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="/sifr/sIFR-print.css" type="text/css" media="print" />
+
+<script src="/sifr/sifr.js" type="text/javascript"></script>
+<script src="/sifr/sifr-addons.js" type="text/javascript"></script>
+
+<%= stylesheet_link_tag "update" %>
+
+<%= orbited_javascript %>
+<%= stomp_connect("game_#{@game.id}", :js => :jquery) %>
+
+<% if current_user %>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('#replies_link').click(function() {
+			  stomp.unsubscribe('/topic/game_<%= @game.id %>');
+			  stomp.unsubscribe('/topic/game_<%= @game.id %>_<%= @current_user.username %>_following');
+			  stomp.subscribe('/topic/game_<%= @game.id %>_<%= @current_user.username %>');
+			});
+			$('#all_updates_link').click(function() {
+			  stomp.unsubscribe('/topic/game_<%= @game.id %>_<%= @current_user.username %>');
+			  stomp.unsubscribe('/topic/game_<%= @game.id %>_<%= @current_user.username %>_following');
+			  stomp.subscribe('/topic/game_<%= @game.id %>');
+			});
+			$('#following_link').click(function() {
+			  stomp.unsubscribe('/topic/game_<%= @game.id %>_<%= @current_user.username %>');
+			  stomp.unsubscribe('/topic/game_<%= @game.id %>');
+			  stomp.subscribe('/topic/game_<%= @game.id %>_<%= @current_user.username %>_following');
+			});
+		});
+	</script>
+<% end %>
+
+<style type="text/css">
+html, body {
+	height:100%;
+}
+
+.hintblur {
+	color:#666666;
+}
+</style>
+
+<%= javascript_tag "var AUTH_TOKEN = #{form_authenticity_token.inspect};" if protect_against_forgery? %>
+
+<script type="text/javascript">
+function resizeView() {
+	if (navigator.userAgent.indexOf("Firefox")!=-1) {
+		$(function() {
+			document.getElementById('updates').style.height = (window.innerHeight - 270) + 'px';
+		});
+	}
+}
+
+resizeView()
+
+var src_twitter = 1
+</script>
+
+<script type="text/javascript">
+gameid = <%= @game.id %>
+</script>
+
+<script type="text/javascript">
+
+//setInterval('refreshUpdates()',5000)
+
+$(function() {
+	refreshUpdates();
+});
+</script>
+
+<%= yield :head %> 
+
+</head>
+
+<body onload="" onresize="resizeView()">
+	
+	<%= fb_connect_javascript_tag %>
+	<%= init_fb_connect "XFBML", :js => :jquery %>
+	
+	<div id="test_div"></div>
+
+	<%= yield %>
+
+</body>
+</html>

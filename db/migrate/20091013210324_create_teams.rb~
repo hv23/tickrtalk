@@ -1,0 +1,21 @@
+class CreateTeams < ActiveRecord::Migration
+  def self.up
+    create_table :teams do |t|
+      t.string :team_name, :limit => 100,  :null => false
+      t.string :team, :limit => 50,  :null => false
+      t.string :mascot, :limit => 50,  :null => false
+      t.string :city, :limit => 50,  :null => false
+      t.string :state, :limit => 50,  :null => false
+      t.string :location, :limit => 100,  :null => false
+      t.string :league, :limit => 30,  :null => true
+      t.string :conference, :limit => 50,  :null => true
+      t.string :division, :limit => 50,  :null => true
+      t.string :resource, :limit => 100,  :null => false
+      t.string :resource_path, :limit => 100,  :null => false
+ 
+      t.timestamps
+  end
+
+  def self.down
+  end
+end

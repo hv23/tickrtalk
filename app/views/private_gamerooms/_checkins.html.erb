@@ -1,0 +1,8 @@
+
+<div class="pane">
+	<ul>
+		<% @checkins.each do |checkin| %>
+			<li><%= checkin.user.username %></li>
+		<% end %>
+	</ul>
+</div>

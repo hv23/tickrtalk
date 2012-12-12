@@ -1,0 +1,23 @@
+<div class="constraint teams_content" style="padding-left:20px;">
+	<h2>All teams in <strong><%= h params[:id].upcase %></strong></h2>
+	
+	<div class="digg_pagination" style="margin-top:10px; margin-bottom:10px;">
+		<%= will_paginate @teams %>
+	</div>
+	
+	<% @teams.each do |team| %>
+	  <div class="dotted_under">
+  		<div style="font-size:1.8em;">
+  			<strong><a href="/teams/<%= team.id %>" style="color:#000000;"><%= h team.team_name %></a></strong>
+  		</div>
+	
+  		<div class="fancount">
+  			<%= team.fans.count %> fans
+  		</div>	
+  	</div>
+	<% end %>
+	
+	<div class="digg_pagination" style="margin-top:20px;">
+		<%= will_paginate @teams %>
+	</div>
+</div>

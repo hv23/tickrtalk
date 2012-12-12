@@ -1,0 +1,2 @@
+class GameroomCheckinsController < ApplicationController
+end

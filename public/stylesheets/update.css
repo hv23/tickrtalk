@@ -1,0 +1,61 @@
+body {
+	color:#000;
+	font-family:Helvetica,Verdana,Arial,sans-serif;
+	line-height:1.5em;
+}
+
+img {
+	border:0;
+}
+
+.content {
+	width:750px;
+}
+
+#update_window {
+	min-height:500px;
+	width:100%;
+	border:1px solid #333;
+	-moz-border-radius:5px;
+}
+
+.update_entry {
+	padding:10px;
+	margin:0px 10px 0px 10px;
+	width:710px;
+	min-height:50px;
+	border-bottom:1px dashed #333;
+}
+
+.name_textfield {
+	font-size:15px;
+	padding:4px;
+	width:100px;
+}
+
+.entry_textfield {
+	font-size:15px;
+	padding:4px;
+	width:300px;
+}
+
+.entry_textarea {
+  height:30px;
+	font-size:15px;
+	padding:4px;
+	width:500px;
+}
+
+.update_button {
+	background-color:#F1EEEE;
+	color:#333333;
+	cursor:pointer;
+	padding:4px 15px;
+	font-size:1em;
+}
+
+.name_textfield, .entry_textfield, .update_button, .entry_textarea {
+	-moz-border-radius:5px;
+	border:1px solid #ADADAD;
+}
+

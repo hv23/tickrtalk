@@ -1,0 +1,22 @@
+
+<% if @update.source == 1 %>
+	<div style="font-size:1.6em;" id="updatecontent">
+		<%= linkup_twitter_mentions(auto_link(h(@update.content))) %>
+	</div>
+	<div>&mdash;
+	
+	<%= link_to "#{@update.twitter_username}", "http://www.twitter.com/#{@update.twitter_username}", :id => "updateuserlink" %> 
+<% else %>
+	<div style="font-size:1.6em;" id="updatecontent">
+	  <% if @update.source == 1 %>
+		  <%= linkup_twitter_mentions(auto_link((h @update.content), :all, :target => "_blank")) %>
+		<% else %>
+	    <%= linkup_mentions(auto_link((h @update.content), :all, :target => "_blank")) %>
+	  <% end %>	  
+	</div>
+	<div>&mdash;
+		<%= link_to "#{User.find(@update.user_id).username}", "/users/#{User.find(@update.user_id).username}", :id => "updateuserlink" %>
+<% end %>
+	
+	in <%= link_to "#{Game.find(@update.game_id).name}", "/gameroom/#{@update.game_id}", :id => "updategameroomlink" %>
+	</div>

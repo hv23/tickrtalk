@@ -1,0 +1,6 @@
+*/2 * * * * /usr/local/bin/ruby /web/tickrtalk/script/runner -e production Update.twitter_updates
+3,7,11,15,19,23,27,31,35,39,43,47,51,55,59 * * * * /usr/local/bin/ruby /web/tickrtalk/script/runner -e production Game.update_games
+5,9,13,17,21,25,29,33,37,41,45,49,53,57 * * * * /usr/local/bin/ruby /web/tickrtalk/script/runner -e production Game.update_games_hourly
+1,19,39 * * * * /usr/local/bin/ruby /web/tickrtalk/script/runner -e production Game.update_slow_games
+10,30,50 * * * * /usr/local/bin/ruby /web/tickrtalk/script/runner -e production Game.update_slow_games_hourly
+0,15,30,45 * * * * /usr/local/bin/ruby /web/tickrtalk/script/runner -e production Game.update_openfooty

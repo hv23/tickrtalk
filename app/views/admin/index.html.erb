@@ -1,0 +1,65 @@
+<div class="constraint">
+
+  <h2>TickrTalk Administration</h2>
+  <p style="font-size:1.2em;">
+    <%= link_to "Main", admin_path %> | <%= link_to "Twitter Lists", admin_twitter_lists_path %>
+  </p>
+  
+  <div class="dotted_under">
+  
+    <h3 style="margin-bottom:10px;">The "Big Game"</h3>
+  	<input type="text" value="" id="biggame" style="font-size:1.5em;width:300px;" onkeyup="searchBigGame();" />
+	
+  	<div style="padding-top:4px; margin-bottom:10px;" id="gamesearchresult">
+  		<span style="color:#555555;">Pick a Big Game by entering a search query</span>
+  	</div>
+	
+  	<p style="font-size:1.2em;">
+      <% if @big_game.nil? %>
+        No Big Game has been selected.
+      <% else %>
+        The Big Game is currently: <strong><%= @big_game.name %></strong> on <strong><%= @big_game.game_datetime.strftime('%A %b %d, %Y') %></strong>
+      <% end %>
+    </p>
+  
+  </div>
+  
+  <div class="dotted_under">
+
+    <h3 style="margin-bottom:0;">TickrTalk Users</h3>
+
+    <table class="admin">
+      <tr>
+        <th class="admin">#</th>
+        <th class="admin">Username</th>
+        <th class="admin">Email</th>
+        <th class="admin">Twitter Name</th>
+        <th class="admin">Facebook Name</th>
+        <th class="admin">Login Count</th>
+        <th class="admin">Last Login At</th>
+        <th class="admin">Admin?</th>
+        <th class="admin">Created At</th>
+        <th class="admin">Updated At</th>
+      </tr>
+  
+      <% @users.each_with_index do |user, i| %>
+        <tr>
+          <td class="admin"><%= i+1 %></td>
+          <td class="admin"><%= link_to user.username, "/users/#{user.username}" %></td>
+          <td class="admin"><%=h user.email %></td>
+          <td class="admin"><%=h user.twitter_name %></td>
+          <td class="admin"><%=h user.facebook_name %></td>
+          <td class="admin"><%=h user.login_count %></td>
+          <td class="admin"><%=h user.last_login_at %></td>
+          <td class="admin"><%=h user.admin %></td>
+          <td class="admin"><%=h user.created_at %></td>
+          <td class="admin"><%=h user.updated_at %></td>
+        </tr>
+      <% end %>
+    </table>
+  
+    <%= will_paginate @users %>
+
+  </div>
+
+</div>

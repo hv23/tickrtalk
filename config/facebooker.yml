@@ -1,0 +1,48 @@
+# File: config/facebooker-mock.yml
+# The api key, secret key, and canvas page name are required to get started
+# Tunnel configuration is only needed if you are going to use the facebooker:tunnel Rake tasks
+# Your callback url in Facebook should be set to http://public_host:public_port
+# If you're building a Facebook connect site, 
+#    change the value of set_asset_host_to_callback_url to false
+# To develop for the new profile design, add the following key..
+# api: new
+# remove the key or set it to anything else to use the old facebook design.
+# This should only be necessary until the final version of the new profile is released.
+ 
+development:
+ application_id: 303594096450
+ api_key: fe950f449389ec4a5a00ad7cb3d6f222
+ secret_key: 9b17a322c230c8133c6b281241f31acb
+ canvas_page_name: tickrtalk_development
+ callback_url: http://localhost:3000/sessions/facebook_finalize
+ pretty_errors: true
+ set_asset_host_to_callback_url: false
+
+test:
+  api_key: fe950f449389ec4a5a00ad7cb3d6f222
+  secret_key: 9b17a322c230c8133c6b281241f31acb
+  canvas_page_name: tickrtalk_development
+  callback_url: http://localhost:3000/
+  pretty_errors: true
+  set_asset_host_to_callback_url: true
+  tunnel:
+    public_host_username:
+    public_host:
+    public_port: 3000
+    local_port: 3000
+    server_alive_interval: 0
+    
+production:
+  application_id: 487726430306
+  api_key: 1af6e888c8d1df212ef6d5db9db85394
+  secret_key: 50eba9a263f65b4ba76c9147e2945c66
+  canvas_page_name: tickrtalk 
+  callback_url: http://tickrtalk.com/sessions/facebook_finalize
+  pretty_errors: true
+  set_asset_host_to_callback_url: false
+  tunnel:
+    public_host_username:
+    public_host:
+    public_port: 4007
+    local_port: 3000
+    server_alive_interval: 0

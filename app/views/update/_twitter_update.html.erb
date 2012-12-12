@@ -1,0 +1,5 @@
+<div id="twitter_update" class="hfa_right_box_content timeline_dotted">
+  <strong><%= link_to @user, "http://www.twitter.com/#{h @user}", :class => "twitter-anywhere-user", :target => "_blank" %></strong>
+  <%= auto_link(@content, :href_options => { :target => '_blank' }) %>
+</div>
+<div class="hfa_right_box_meta"><%= time_ago_in_words(@date_created) %> ago <a href="/gameroom/<%= @game_id %>"><%= @game_name %></a> <%= link_to "via Twitter", @linkto.to_s, :target => "_blank" %></div>

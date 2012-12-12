@@ -1,0 +1,15 @@
+TickrTalk by TickrTalk
+TickrTalk, the live sports community. YAY
+created by TickrTalk â€“ read and write access by default â€“ 0 users
+
+Edit Application Settings
+  Consumer key
+EwXbWrCRINmbmQXAXsy96w
+  Consumer secret
+bMEAPeC3XHhfPteyHqOqBQdVH6IQ0todohj93LA7lPQ
+  Request token URL
+http://twitter.com/oauth/request_token
+  Access token URL
+http://twitter.com/oauth/access_token
+  Authorize URL
+http://twitter.com/oauth/authorize

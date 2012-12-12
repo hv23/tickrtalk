@@ -1,0 +1,24 @@
+football:
+  id: 1
+  name: "football"
+  short: "nfl"
+
+ncaa_football:
+  id: 2
+  name: "ncaa_football"
+  short: "ncaaf"
+
+basketball:
+  id: 3
+  name: "basketball"
+  short: "nba"
+
+baseball:
+  id: 4
+  name: "baseball"
+  short: "mlb"
+
+hockey:
+  id: 5
+  name: "hockey"
+  short: "nhl"

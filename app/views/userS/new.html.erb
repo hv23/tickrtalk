@@ -1,0 +1,11 @@
+<% if params[:box] %>
+
+  <%= render :partial => "signin" %>
+
+<% else %>
+
+<div class="constraint" style="padding-left:20px;">
+	<%= render @user %>
+</div>
+
+<% end %>

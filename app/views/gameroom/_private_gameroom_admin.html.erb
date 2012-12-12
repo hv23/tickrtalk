@@ -1,0 +1,10 @@
+<% javascript_tag do -%>
+	jQuery(document).ready(function() {
+		jQuery('a[rel*=facebox]').facebox();
+		 $.facebox.settings.opacity = 0.5;
+	});
+<% end -%>
+
+<% if @private_gameroom && current_user == @private_gameroom.user %>
+	<strong><%= link_to '<img src="/images/send_invitations.png" />', "/private_gamerooms/#{@game.id}/edit?gameroom_key=#{@private_gameroom.gameroom_key}", :rel => "facebox", :style => "color:white; font-size:14px;" %></strong>
+<% end %>

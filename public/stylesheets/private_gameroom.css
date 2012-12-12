@@ -1,0 +1,209 @@
+body {
+	background-image:url(/images/gameroombg.png);
+	background-repeat:repeat-x;
+	background-color:#4f0000;
+	color:#FFFFFF;
+}
+
+#grheader {
+	height:87px;
+	color:#EEEEEE;
+	padding-top:15px;
+	padding-left:20px;
+}
+
+#grheadertext {
+	height:98px;
+	color:#FFFFFF;
+	padding-top:5px;
+	font-size:4em;
+	line-height:1.0em;
+}
+
+#grheadertext:hover {
+	color:#FFFFFF;
+}
+
+.clearspace {
+	padding:0;
+	margin:0;
+}
+
+#underheader {
+	height:44px;
+	background-image:url(/images/gameroom-underheader.gif);
+	background-repeat:repeat-x;
+	padding-left:15px;
+	padding-right:15px;
+}
+
+#underheader img {
+	margin:0;
+}
+
+.panetitle {
+	background-image:url(/images/gameroom-panetitlebg.png);
+	background-repeat:repeat-x;
+	padding-top:5px;
+	padding-bottom:5px;
+	font-size:1.3em;
+	padding-left:7px;
+	color:#FFFFFF;
+}
+
+.pane {
+	padding:7px;
+	padding-top:2px;
+	margin-bottom:10px;
+	color:#FFFFFF !important;
+}
+
+.pane a {
+	color:#FFFFFF !important;
+}
+
+.updatearea {
+	background-image:url(/images/gameroom-updatebg.gif);
+	background-repeat:repeat-x;
+	height:67px;
+}
+
+#updates {
+	overflow-y:scroll;
+	color:#000000;
+	background-color:#FFFFFF;
+}
+
+#updatetext {
+	background-color:transparent;
+	outline:0;
+	border:0;
+	font-family:Arial,sans-serif;
+	font-size:1.1em;
+}
+
+.updatetext {
+	background-color:transparent;
+	outline:0;
+	border:0;
+	font-family:Arial,sans-serif;
+	font-size:1.2em;
+	height:26px;
+	padding:0;
+	width:97%;
+}
+
+.updatetext:active {
+	border:0;
+}
+
+.updateitem {
+	background-image:url(/images/updatebg.gif);
+	background-repeat:repeat-x;
+	background-position:bottom;
+	background-color:#ffffff;
+}
+
+.src_twitter {
+	background-image:url(/images/updatebg.gif);
+	background-repeat:repeat-x;
+	background-position:bottom;
+	background-color:#ffffff;
+}
+
+#send_update_button {
+	float:right;
+	margin:10px 10px 0px 0px;
+}
+
+.user_label {
+	font-size:12px;
+}
+
+.user_field {
+	font-size:1px;
+	height:14px;
+	padding-left:2px;
+	padding-top:2px;
+	width:150px;
+	margin-bottom:5px;
+}
+
+.user_button {
+	background-color:#F1EEEE;
+	color:#333333;
+	cursor:pointer;
+	padding:2px 8px;
+	font-size:12px;
+	-moz-border-radius:3px;
+	border:1px solid #ADADAD;
+	margin-top:5px;
+}
+
+#checkins {
+	
+}
+
+#updatetitle {
+	background-image:url(/images/updatepanebg.gif);
+	background-repeat:repeat-x;
+	height:46px;
+}
+
+#updaterbox {
+	background-image:url(/images/updaterbg.gif);
+	height:41px;
+	padding-top:7px;
+	padding-left:7px;
+	padding-right:7px;
+}
+
+#updaterleft {
+	height:36px;
+	background-image:url(/images/updaterbgleft.gif);
+	background-repeat:no-repeat;
+}
+
+#updaterright {
+	height:36px;
+	background-image:url(/images/updaterbgright.gif);
+	background-repeat:no-repeat;
+	background-position:right center;
+	background-color:transparent;
+}
+
+#updaterinput {
+	padding:5px;
+	padding-left:10px;
+}
+
+#tablist {
+	background-image:url(/images/tabbg.gif);
+	background-repeat:repeat-x;
+	background-color:#FFFFFF;
+	color:#857677;
+}
+
+#tablist a {
+	margin-right:10px;
+	font-size:1.2em;
+}
+
+.update_reply_to {
+	color:#555555;
+	text-decoration:none;
+	margin-left:10px;
+	float:right;
+}
+
+.atabcurrent {
+	color:#111111 !important;
+	font-weight:bold;
+}
+
+#activity {
+	display:inline;
+	width:auto;
+	height:auto;
+	
+}

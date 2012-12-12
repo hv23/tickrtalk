@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+<title>TickrTalk</title>
+<link rel="stylesheet" type="text/css" href="/stylesheets/screen.css" />
+<script type="text/javascript" src="/javascripts/jquery.js"></script>
+<script type="text/javascript" src="/javascripts/application.js"></script>
+<script type="text/javascript" src="/javascripts/prototype.js"></script>
+<%= javascript_tag "var AUTH_TOKEN = #{form_authenticity_token.inspect};" if protect_against_forgery? %>
+</head>
+<body>
+
+<div id="canvas">
+
+<div id="header">
+	<div id="topheader">
+		<div class="constraint">
+			<div style="float:left;width:200px;"><a href="/"><img src="/images/tickertalklogo.gif" alt="TickerTalk" /></a></div>
+			<div style="float:right;width:760px;padding-top:24px;" id="topmenu"><a href="/games"><img src="/images/menu-games.png" /></a><a href="/teams"><img src="/images/menu-teams.png" /></a><a href="/stream"><img src="/images/menu-stream.png" /></a></div>
+			<div style="clear:both;"></div>
+		</div>
+	</div>
+	<div id="headerunder">
+		<div class="constraint" style="padding-left:25px;padding-top:4px;color:#FFFFFF;">
+			<% if session[:user_id].nil? %>
+			<strong style="padding-top:8px;">LOGIN</strong> <form action="/account/login" method="post" style="display:inline;padding:0;margin:0;"><%= tag(:input, :type => "hidden", :name =>
+			request_forgery_protection_token.to_s, :value =>
+			form_authenticity_token) %><input type="text" name="username" /> <input type="password" name="password" /> <input type="submit" value="login" /></form>
+			<% else %>
+			<div style="margin-top:4px;">Welcome, <strong style="padding-right:20px;"><%= h session[:username] %></strong> <a href="/users/<%= session[:username] %>">My Profile</a> / <a href="/myteams">My Teams</a> / <a href="/account/settings">Settings</a> / <%= link_to "Logout", logout_path %></div>
+			<% end %>
+		</div>
+	</div>
+</div>
+<% unless session[:flash].nil? %>
+<div class="constraint">
+<div style="padding-top:20px;">
+<div class="notice">
+<%= session[:flash] %>	
+</div>
+</div>
+</div>
+<% session[:flash] = nil %>
+<% end %>
+
+<% unless flash[:notice].nil? %>
+<div class="constraint">
+<div style="padding-top:20px;">
+<div class="notice">
+<%= flash[:notice] %>	
+</div>
+</div>
+</div>
+<% end %>
+
+<% unless flash[:success].nil? %>
+<div class="constraint">
+<div style="padding-top:20px;">
+<div class="success">
+<%= flash[:success] %>
+</div>
+</div>
+</div>
+<% end %>
+
+<div class="content">
+<%= yield %>
+</div>
+
+<div id="footer">
+
+</div>
+
+</div>
+
+</body>
+</html>
